@@ -50,7 +50,7 @@ public class ArvoreBinaria<T extends Comparable> {
     return no;
   }
 
-  public boolean busca(T elemento) {
+  public boolean busca(T elemento) { //mudar nome para algo como 'Existe'?
     if (raiz.getElemento().compareTo(elemento) == 0) {
       return true;
     } 
@@ -61,4 +61,5 @@ public class ArvoreBinaria<T extends Comparable> {
     }
     return false;
   }
+
 }

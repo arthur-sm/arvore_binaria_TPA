@@ -1,4 +1,5 @@
 import arvoreBinaria.ArvoreBinaria;
+import arvoreBinaria.No;
 import arvoreBinariaAluno.Aluno;
 
 public class App {
@@ -11,9 +12,41 @@ public class App {
         arvore.inserir(cleber);
         arvore.inserir(caio);
         arvore.inserir(brenno);
-        System.out.println(arvore.busca(casio));
+        //System.out.println("Matrícula Cleber:" + cleber.getMatricula());
+        //System.out.println("Matrícula Cleber:" + arvore.getRaiz().getElemento().getMatricula());
+        System.out.println("Raiz: \n" + arvore.getRaiz());
+        System.out.println("Casio existe na árvore: " + arvore.busca(casio));
         arvore.inserir(casio);
-        System.out.println(arvore.busca(casio));
-        System.out.println(arvore.getRaiz());
+        System.out.println("Casio existe na árvore: " + arvore.busca(casio));
+        System.out.println("Raiz: \n" + arvore.getRaiz());
+        System.out.println("Testando procura por matrícula:");
+        System.out.println("\n" + encontraMatricula(arvore.getRaiz(), 1234, 0).getElemento());
+        System.out.println("\n" + encontraMatricula(arvore.getRaiz(), 1235, 0).getElemento());
+        System.out.println("\n" + encontraMatricula(arvore.getRaiz(), 1233, 0).getElemento());
+        System.out.println("\n" + encontraMatricula(arvore.getRaiz(), 1232, 0).getElemento());
+        System.out.println("Procurando pela matrícula 9999");
+        System.out.println("\n" + encontraMatricula(arvore.getRaiz(), 9999, 0).getElemento());
+    }
+
+    public static No<Aluno> encontraMatricula(No<Aluno> Atual, int mtrcl, int percorridos) {
+        No<Aluno> resultado;
+        Aluno falha = new Aluno(-1, " ", " ");
+        resultado = new No<Aluno>(falha);
+        if(Atual.getElemento().getMatricula() == mtrcl) {
+            resultado = Atual;
+            System.out.println("Elementos percorridos: " + percorridos);
+        }
+        else {
+            percorridos++;
+            if((Atual.getElemento().getMatricula() > mtrcl) && (Atual.getEsquerda() != null)) {
+                Atual = Atual.getEsquerda();
+                resultado = encontraMatricula(Atual, mtrcl, percorridos);
+            }
+            else if (Atual.getDireita() != null) {
+                Atual = Atual.getDireita();
+                resultado = encontraMatricula(Atual, mtrcl, percorridos);
+            }
+        }
+        return resultado;
     }
 }
