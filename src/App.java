@@ -25,6 +25,8 @@ public class App {
         arvore.remove(9);
         System.out.println("\nRemovendo elemento 9");
         System.out.println(arvore.getRaiz());
+        System.out.println(arvore.getAltura());
+        System.out.println(arvore.insere(10));
 
 
 
