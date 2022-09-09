@@ -28,23 +28,23 @@ public class App {
         System.out.println("\n" + encontraMatricula(arvore.getRaiz(), 9999, 0).getElemento());
     }
 
-    public static No<Aluno> encontraMatricula(No<Aluno> Atual, int mtrcl, int percorridos) {
+    public static No<Aluno> encontraMatricula(No<Aluno> Atual, int matricula, int percorridos) {
         No<Aluno> resultado;
         Aluno falha = new Aluno(-1, " ", " ");
         resultado = new No<Aluno>(falha);
-        if(Atual.getElemento().getMatricula() == mtrcl) {
+        if(Atual.getElemento().getMatricula() == matricula) {
             resultado = Atual;
             System.out.println("Elementos percorridos: " + percorridos);
         }
         else {
             percorridos++;
-            if((Atual.getElemento().getMatricula() > mtrcl) && (Atual.getEsquerda() != null)) {
+            if((Atual.getElemento().getMatricula() > matricula) && (Atual.getEsquerda() != null)) {
                 Atual = Atual.getEsquerda();
-                resultado = encontraMatricula(Atual, mtrcl, percorridos);
+                resultado = encontraMatricula(Atual, matricula, percorridos);
             }
             else if (Atual.getDireita() != null) {
                 Atual = Atual.getDireita();
-                resultado = encontraMatricula(Atual, mtrcl, percorridos);
+                resultado = encontraMatricula(Atual, matricula, percorridos);
             }
         }
         return resultado;
