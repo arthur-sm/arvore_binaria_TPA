@@ -25,7 +25,7 @@ public class ArvoreBinaria<T extends Comparable> {
   }
 
   /* Insere um novo elemento (objeto) dentro da arvore */
-  public boolean inserir(T elemento) {
+  public boolean insere(T elemento) {
     No<T> novoNo = new No<T>(elemento);
     if (raiz == null) {
       raiz = novoNo;
@@ -37,21 +37,21 @@ public class ArvoreBinaria<T extends Comparable> {
       while (proximoNo != null) {
         noPosicao = proximoNo;
         alturaAuxiliar++;
-        if (noPosicao.getElemento().compareTo(novoNo.getElemento()) < 0) {
+        if (noPosicao.getElemento().compareTo(elemento) > 0) {
           proximoNo = noPosicao.getEsquerda();
-        } else if (noPosicao.getElemento().compareTo(novoNo.getElemento()) == 0) {
+        } else if (noPosicao.getElemento().compareTo(elemento) == 0) {
           proximoNo = null;
         } else {
           proximoNo = noPosicao.getDireita();
         }
       }
-      if (noPosicao.getElemento().compareTo(novoNo.getElemento()) != 0 && (alturaAuxiliar + 1) > this.altura)
+      if (noPosicao.getElemento().compareTo(elemento) != 0 && (alturaAuxiliar + 1) > this.altura)
         this.altura = alturaAuxiliar + 1;
       
-      if (noPosicao.getElemento().compareTo(novoNo.getElemento()) < 0) {
+      if (noPosicao.getElemento().compareTo(elemento) > 0) {
         noPosicao.setEsquerda(novoNo);
         return true;
-      } else if (noPosicao.getElemento().compareTo(novoNo.getElemento()) > 0) {
+      } else if (noPosicao.getElemento().compareTo(elemento) < 0) {
         noPosicao.setDireita(novoNo);
         return true;
       } else {
@@ -68,14 +68,13 @@ public class ArvoreBinaria<T extends Comparable> {
     if (raiz.getElemento().compareTo(elemento) == 0) {
       return true;
     }
-    No<T> novoNo = new No<T>(elemento);
     No<T> noPosicao = this.raiz;
     No<T> proximoNo = noPosicao;
     while (proximoNo != null) {
       noPosicao = proximoNo;
-      if (noPosicao.getElemento().compareTo(novoNo.getElemento()) < 0) {
+      if (noPosicao.getElemento().compareTo(elemento) > 0) {
         proximoNo = noPosicao.getEsquerda();
-      } else if (noPosicao.getElemento().compareTo(novoNo.getElemento()) == 0) {
+      } else if (noPosicao.getElemento().compareTo(elemento) == 0) {
         proximoNo = null;
       } else {
         proximoNo = noPosicao.getDireita();
@@ -88,11 +87,60 @@ public class ArvoreBinaria<T extends Comparable> {
   }
 
   public boolean remove(T elemento) {
-    No<T> noSeraRemovido = new No<T>(elemento);
-    if (noSeraRemovido == raiz) {
-      //Fazer
+    No<T> noPosicao = this.raiz;
+    No<T> proximoNo = noPosicao;
+    No<T> noAnterior = null;
+    boolean encontrouNo = false;
+    while (!encontrouNo && proximoNo != null) {
+      if (noPosicao.getElemento().compareTo(elemento) > 0) {
+        proximoNo = noPosicao.getEsquerda();
+      } else if (noPosicao.getElemento().compareTo(elemento) == 0) {
+        encontrouNo = true;
+      } else {
+        proximoNo = noPosicao.getDireita();
+      } 
+      if (!encontrouNo) {
+        noAnterior = noPosicao;
+        noPosicao = proximoNo;
+      }
     }
-    return false;
+    if (!encontrouNo) {
+      return false;
+    } else if (noPosicao.getDireita() != null) {
+      No<T> noBuscado = noPosicao.getDireita();
+      proximoNo = noBuscado;
+      while (proximoNo.getEsquerda() != null) {
+        noBuscado = proximoNo;
+        proximoNo = noBuscado.getEsquerda();
+      }
+      if(noAnterior != null && noAnterior.getDireita().getElemento().compareTo(noPosicao.getElemento()) == 0) {
+        noAnterior.setDireita(noBuscado);
+      } else if (noAnterior != null) {
+        noAnterior.setEsquerda(noBuscado);
+      } else {
+        this.raiz = noBuscado;
+      }
+      noBuscado.setEsquerda(noPosicao.getEsquerda());
+      noPosicao = null;
+      return true;
+    } else if (noPosicao.getEsquerda() != null){
+      if(noAnterior != null && noAnterior.getDireita().getElemento().compareTo(noPosicao.getElemento()) == 0) {
+        noAnterior.setDireita(noPosicao.getEsquerda());
+      } else if (noAnterior != null) {
+        noAnterior.setEsquerda(noPosicao.getEsquerda());
+      }
+      noPosicao = null;
+      return true;
+    } else {
+      if(noAnterior != null && noAnterior.getDireita().getElemento().compareTo(noPosicao.getElemento()) == 0) {
+        noAnterior.setDireita(null);
+      } else if (noAnterior != null) {
+        noAnterior.setEsquerda(null);
+      }
+      return true;
+    }
   }
+
+  
 
 }

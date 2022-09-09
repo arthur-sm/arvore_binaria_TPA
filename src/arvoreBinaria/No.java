@@ -31,6 +31,6 @@ public class No <T extends Comparable> {
 
   @Override
   public String toString() {
-    return elemento + "" + esquerda + " " + direita + "\n";
+    return "\nElemento: " + elemento + "\nEsquerda do elemento "+ elemento + ": " + esquerda + "\nDireita do elemento "+ elemento + ": " + direita;
   }
 }
