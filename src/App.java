@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 import arvoreBinaria.ArvoreBinaria;
@@ -28,7 +29,10 @@ public class App {
         System.out.println(arvore.getAltura());
         System.out.println(arvore.insere(10));
 
-
+        ArrayList<Integer> teste = arvore.caminhaEmOrdem();
+        System.out.println(teste);
+        teste = arvore.caminhaEmNivel();
+        System.out.println(teste);
 
 
         // Aluno cleber = new Aluno(1234, "Cleber", "20");

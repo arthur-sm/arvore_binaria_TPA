@@ -4,6 +4,8 @@
  */
 package arvoreBinaria;
 
+import java.util.ArrayList;
+
 public class ArvoreBinaria<T extends Comparable> {
   private No<T> raiz;
 
@@ -127,6 +129,42 @@ public class ArvoreBinaria<T extends Comparable> {
     return altura(no);
   }
 
+  public ArrayList<T> caminhaEmOrdem() {
+    No<T> no = this.raiz;
+    ArrayList<T> emOrdem = new ArrayList<>();
+    caminhandoEmOrdem(no, emOrdem);
+
+    return emOrdem;
+  }
+
+  private void caminhandoEmOrdem(No<T> no, ArrayList<T> emOrdem) {
+    if (no != null) {
+      if (no.getElemento() != null) 
+        caminhandoEmOrdem(no.getEsquerda(), emOrdem);
+      emOrdem.add(no.getElemento());
+      if (no.getDireita() != null) 
+        caminhandoEmOrdem(no.getDireita(), emOrdem);
+    }
+  }
+
+  public ArrayList<T> caminhaEmNivel() {
+    No<T> no = this.raiz;
+    ArrayList<T> emNivel = new ArrayList<>();
+    caminhandoEmNivel(no, emNivel);
+
+    return emNivel;
+  }
+
+  private void caminhandoEmNivel(No<T> no, ArrayList<T> emNivel) {
+    if (no != null) {
+      emNivel.add(no.getElemento());
+      if (no.getElemento() != null) 
+        caminhandoEmNivel(no.getEsquerda(), emNivel);
+      if (no.getDireita() != null) 
+        caminhandoEmNivel(no.getDireita(), emNivel);
+    }
+  }
+
   private int altura(No<T> no) {
     if (no == null) {
       return -1;
@@ -139,6 +177,11 @@ public class ArvoreBinaria<T extends Comparable> {
         return direita + 1;
       }    
     }
+  }
+
+  public int quantidadeElementos() {
+    ArrayList<T> elementos = caminhaEmOrdem();
+    return elementos.size();
   }
 
 }
