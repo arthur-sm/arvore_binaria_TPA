@@ -31,13 +31,17 @@ public class App {
                     e.getMessage());
         }
         System.out.println(arvore.getRaiz());
-        // System.out.println(arvore.getAltura());
-        // System.out.println(arvore.quantidadeElementos());
+        System.out.println(arvore.getAltura());
+        System.out.println(arvore.quantidadeElementos());
         System.out.println(arvore.caminhaEmNivel());
-        // System.out.println(arvore.remove(new Aluno(6062803, "Melissa Edwards", "68")));
-        // System.out.println(arvore.quantidadeElementos());
+        System.out.println(arvore.remove(new Aluno(6062803, "Melissa Edwards", "68")));
+        System.out.println(arvore.quantidadeElementos());
         System.out.println(arvore.caminhaEmOrdem());
-        System.out.println(arvore.menorElemento());
+        System.out.println(arvore.getMaiorElemento());
+        System.out.println(arvore.getMenorElemento());
+        
+        System.out.println(arvore.getPioresCasos());
+        System.out.println(arvore.getAltura());
         // arvore.insere(9);
         // arvore.insere(3);
         // arvore.insere(4);

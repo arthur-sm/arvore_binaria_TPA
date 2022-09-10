@@ -29,8 +29,8 @@ public class No <T extends Comparable> {
     this.elemento = elemento;
   }
 
-  @Override
-  public String toString() {
-    return "\nElemento: " + elemento + "\nEsquerda do elemento "+ elemento + ": " + esquerda + "\nDireita do elemento "+ elemento + ": " + direita;
-  }
+  // @Override
+  // public String toString() {
+  //   return "\nElemento: " + elemento + "\nEsquerda do elemento "+ elemento + ": " + esquerda + "\nDireita do elemento "+ elemento + ": " + direita;
+  // }
 }

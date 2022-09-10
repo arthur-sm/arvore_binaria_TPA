@@ -183,7 +183,7 @@ public class ArvoreBinaria<T extends Comparable> {
     return elementos.size();
   }
 
-  public T menorElemento() {
+  public T getMenorElemento() {
     No<T> no = this.raiz;
     No<T> proximoNo = no;
     while (proximoNo != null) {
@@ -193,7 +193,7 @@ public class ArvoreBinaria<T extends Comparable> {
     return no.getElemento();
   }
 
-  public T maiorElemento() {
+  public T getMaiorElemento() {
     No<T> no = this.raiz;
     No<T> proximoNo = no;
     while (proximoNo != null) {
@@ -201,6 +201,28 @@ public class ArvoreBinaria<T extends Comparable> {
       proximoNo = proximoNo.getDireita();
     }
     return no.getElemento();
+  }
+
+  public ArrayList<T> getPioresCasos() {
+    No<T> no = this.raiz;
+    ArrayList<T> pioresCasos = new ArrayList<>();
+    buscandoPiorCaso(no, 0, pioresCasos);
+    return pioresCasos;
+  }
+
+  private T buscandoPiorCaso(No<T> no, int nivel, ArrayList<T> pioresCasos) {
+    if (no != null) {
+      if (this.getAltura() == nivel){
+        pioresCasos.add(no.getElemento());
+      }
+      nivel++;
+      if (no.getElemento() != null)
+        buscandoPiorCaso(no.getEsquerda(), nivel, pioresCasos);
+      if (no.getDireita() != null)
+        buscandoPiorCaso(no.getDireita(), nivel, pioresCasos);
+    } 
+    return null;
+    
   }
 
 }
