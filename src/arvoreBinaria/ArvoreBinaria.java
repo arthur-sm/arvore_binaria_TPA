@@ -18,6 +18,10 @@ public class ArvoreBinaria<T extends Comparable> {
   }
 
   private No<T> comparaNoAtualComProximo(No<T> noPosicao, No<T> proximoNo, T elemento) {
+    /* 
+    ? Não seria interessante substituir esse parâmetro 'proximoNo' por uma variável interna da função?
+    ? da forma como está implementado agora, causou um pouco de confusão porque, até onde entendi, o valor passado no parâmetro é irrelevante
+    */
     if (noPosicao.getElemento().compareTo(elemento) < 0) {
       proximoNo = noPosicao.getEsquerda();
     } else if (noPosicao.getElemento().compareTo(elemento) == 0) {
@@ -51,6 +55,7 @@ public class ArvoreBinaria<T extends Comparable> {
         /*
          * Pensar numa forma de retornar isso.
          * Pensei em provavelmente um Boolean, para falso, caso não seja inserido.
+         ! acredito que essa seja a melhor opção
          */
         // System.out.println("Esse elemento já existe na árvore");
         return false;
@@ -91,6 +96,10 @@ public class ArvoreBinaria<T extends Comparable> {
     No<T> noAnterior = null;
     boolean encontrouNo = false;
     while (!encontrouNo && proximoNo != null) {
+      /*
+      ? Pode ser interessante mover essa chamada da função para depois da checagem noPosicao.getElemento().compareTo(elemento) == 0
+      ? Assim evitariamos situações onde é realizada a operação de atribuir um valor ao proximoNo sendo que o noPosicao já encontrou o no desejado
+      */
       proximoNo = comparaNoAtualComProximo(noPosicao, proximoNo, elemento);
       if (noPosicao.getElemento().compareTo(elemento) == 0) {
         encontrouNo = true;
