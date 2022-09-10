@@ -41,6 +41,6 @@ public class Aluno implements Comparable<Aluno> {
   }
   @Override
   public String toString() {
-    return matricula + " " + nome + " " + nota + " ";
+    return matricula + " " ;//+ nome + " " + nota + " ";
   }
 }
