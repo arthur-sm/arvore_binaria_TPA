@@ -18,17 +18,15 @@ public class ArvoreBinaria<T extends Comparable> {
   }
 
   private No<T> comparaNoAtualComProximo(No<T> noPosicao, No<T> proximoNo, T elemento) {
-    if (noPosicao.getElemento().compareTo(elemento) > 0) {
+    if (noPosicao.getElemento().compareTo(elemento) < 0) {
       proximoNo = noPosicao.getEsquerda();
     } else if (noPosicao.getElemento().compareTo(elemento) == 0) {
       proximoNo = null;
     } else {
       proximoNo = noPosicao.getDireita();
     }
-
     return proximoNo;
   }
-
 
   /* Insere um novo elemento (objeto) dentro da arvore */
   public boolean insere(T elemento) {
@@ -43,14 +41,15 @@ public class ArvoreBinaria<T extends Comparable> {
         noPosicao = proximoNo;
         proximoNo = comparaNoAtualComProximo(noPosicao, proximoNo, elemento);
       }
-      if (noPosicao.getElemento().compareTo(elemento) > 0) {
+      if (noPosicao.getElemento().compareTo(elemento) < 0) {
         noPosicao.setEsquerda(novoNo);
         return true;
-      } else if (noPosicao.getElemento().compareTo(elemento) < 0) {
+      } else if (noPosicao.getElemento().compareTo(elemento) > 0) {
         noPosicao.setDireita(novoNo);
         return true;
       } else {
-        /* Pensar numa forma de retornar isso.
+        /*
+         * Pensar numa forma de retornar isso.
          * Pensei em provavelmente um Boolean, para falso, caso não seja inserido.
          */
         // System.out.println("Esse elemento já existe na árvore");
@@ -59,7 +58,6 @@ public class ArvoreBinaria<T extends Comparable> {
     }
   }
 
-  
   public boolean busca(T elemento) { // mudar nome para algo como 'Existe'?
     if (raiz.getElemento().compareTo(elemento) == 0) {
       return true;
@@ -76,10 +74,11 @@ public class ArvoreBinaria<T extends Comparable> {
     return false;
   }
 
-  private void setaValorDoNoAnterior (No<T> noAnterior, No<T> noPosicao, No<T>noPosterior) {
+  private void setaValorDoNoAnterior(No<T> noAnterior, No<T> noPosicao, No<T> noPosterior) {
     if (noAnterior == null) {
       this.raiz = noPosterior;
-    } else if (noAnterior != null && noAnterior.getDireita().getElemento().compareTo(noPosicao.getElemento()) == 0) {
+    } else if (noAnterior != null && noAnterior.getDireita() != null
+        && noAnterior.getDireita().getElemento().compareTo(noPosicao.getElemento()) == 0) {
       noAnterior.setDireita(noPosterior);
     } else {
       noAnterior.setEsquerda(noPosterior);
@@ -114,7 +113,7 @@ public class ArvoreBinaria<T extends Comparable> {
       noBuscado.setEsquerda(noPosicao.getEsquerda());
       noPosicao = null;
       return true;
-    } else if (noPosicao.getEsquerda() != null){
+    } else if (noPosicao.getEsquerda() != null) {
       setaValorDoNoAnterior(noAnterior, noPosicao, noPosicao.getEsquerda());
       noPosicao = null;
       return true;
@@ -129,6 +128,20 @@ public class ArvoreBinaria<T extends Comparable> {
     return altura(no);
   }
 
+  private int altura(No<T> no) {
+    if (no == null) {
+      return -1;
+    } else {
+      int esquerda = altura(no.getEsquerda());
+      int direita = altura(no.getDireita());
+      if (esquerda > direita) {
+        return esquerda + 1;
+      } else {
+        return direita + 1;
+      }
+    }
+  }
+
   public ArrayList<T> caminhaEmOrdem() {
     No<T> no = this.raiz;
     ArrayList<T> emOrdem = new ArrayList<>();
@@ -139,10 +152,10 @@ public class ArvoreBinaria<T extends Comparable> {
 
   private void caminhandoEmOrdem(No<T> no, ArrayList<T> emOrdem) {
     if (no != null) {
-      if (no.getElemento() != null) 
+      if (no.getElemento() != null)
         caminhandoEmOrdem(no.getEsquerda(), emOrdem);
       emOrdem.add(no.getElemento());
-      if (no.getDireita() != null) 
+      if (no.getDireita() != null)
         caminhandoEmOrdem(no.getDireita(), emOrdem);
     }
   }
@@ -158,30 +171,58 @@ public class ArvoreBinaria<T extends Comparable> {
   private void caminhandoEmNivel(No<T> no, ArrayList<T> emNivel) {
     if (no != null) {
       emNivel.add(no.getElemento());
-      if (no.getElemento() != null) 
+      if (no.getElemento() != null)
         caminhandoEmNivel(no.getEsquerda(), emNivel);
-      if (no.getDireita() != null) 
+      if (no.getDireita() != null)
         caminhandoEmNivel(no.getDireita(), emNivel);
-    }
-  }
-
-  private int altura(No<T> no) {
-    if (no == null) {
-      return -1;
-    } else {
-      int esquerda = altura(no.getEsquerda());
-      int direita = altura(no.getDireita());
-      if (esquerda > direita) {
-        return esquerda + 1;
-      } else {
-        return direita + 1;
-      }    
     }
   }
 
   public int quantidadeElementos() {
     ArrayList<T> elementos = caminhaEmOrdem();
     return elementos.size();
+  }
+
+  public T getMenorElemento() {
+    No<T> no = this.raiz;
+    No<T> proximoNo = no;
+    while (proximoNo != null) {
+      no = proximoNo;
+      proximoNo = proximoNo.getEsquerda();
+    }
+    return no.getElemento();
+  }
+
+  public T getMaiorElemento() {
+    No<T> no = this.raiz;
+    No<T> proximoNo = no;
+    while (proximoNo != null) {
+      no = proximoNo;
+      proximoNo = proximoNo.getDireita();
+    }
+    return no.getElemento();
+  }
+
+  public ArrayList<T> getPioresCasos() {
+    No<T> no = this.raiz;
+    ArrayList<T> pioresCasos = new ArrayList<>();
+    buscandoPiorCaso(no, 0, pioresCasos);
+    return pioresCasos;
+  }
+
+  private T buscandoPiorCaso(No<T> no, int nivel, ArrayList<T> pioresCasos) {
+    if (no != null) {
+      if (this.getAltura() == nivel){
+        pioresCasos.add(no.getElemento());
+      }
+      nivel++;
+      if (no.getElemento() != null)
+        buscandoPiorCaso(no.getEsquerda(), nivel, pioresCasos);
+      if (no.getDireita() != null)
+        buscandoPiorCaso(no.getDireita(), nivel, pioresCasos);
+    } 
+    return null;
+    
   }
 
 }
