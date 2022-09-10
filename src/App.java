@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 import arvoreBinaria.ArvoreBinaria;
 import arvoreBinaria.No;
@@ -96,6 +97,33 @@ public class App {
         // System.out.println("Procurando pela matrícula 9999");
         // System.out.println("\n" + encontraMatricula(arvore.getRaiz(), 9999,
         // 0).getElemento());
+    }
+
+    public static void Menu(ArvoreBinaria<Aluno> arvore) {
+        Scanner userinput = new Scanner(System.in);
+        while (true) {
+            System.out.println(
+                "Escolha uma opção: \n1 - Estatísticas\n2 - Busca por Matrícula\n3 - Exclusão por Matrícula\n4 - Incluir Aluno\n5 - Sair");
+            int escolha = userinput.nextInt();
+            if (escolha == 1) {
+                //Exibir estatísticas – Deve exibir a quantidade total de elementos, a altura da árvore, o maior e o menor elemento e o pior caso de busca.
+                System.out.println("Quantidade total de elementos da árvore: " + arvore.quantidadeElementos());
+                System.out.println("Altura da árvore: " + arvore.getAltura());
+                //maior elemento
+                //menor elemento
+                //pior caso
+            }
+            else if (escolha == 2) {
+                int matricula = userinput.nextInt();
+                System.out.println("Dados da matrícula cadastrada: " + encontraMatricula(arvore.getRaiz(), matricula, 0).getElemento());
+            }
+            else if (escolha == 5) {
+                //Sair: o programa deve percorrer a árvore usando caminhamento "em ordem" e gerar um arquivo em que cada linha apresentará a matrícula, o nome e a nota de um aluno, sempre separados por ;. 
+                System.out.println(arvore.caminhaEmOrdem());
+                userinput.close();
+                break;
+            }
+        }
     }
 
     public static No<Aluno> encontraMatricula(No<Aluno> Atual, int matricula, int percorridos) {
