@@ -3,7 +3,7 @@
    @ Autor: Arthur Miguel e Cleber de Jesus Salustiano
    @ Criado em: 07/09/2022 11:00
    @ Editado por: Arthur SM
-   @ Data da edição: 10/09/22 13:13:19
+   @ Data da edição: 10/09/22 17:23:39
    @ Descrição: Código de aplicação da Primeira etapa do trabalho prático de árvores
  **********/
 
@@ -22,7 +22,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<>();
         try {
-            FileReader arq = new FileReader("./teste/teste_100.txt");
+            FileReader arq = new FileReader("./teste/teste_10000.txt");
             BufferedReader lerArq = new BufferedReader(arq);
 
             String value = lerArq.readLine();
@@ -123,15 +123,15 @@ public class App {
                 System.out.println("\nQuantidade total de elementos da árvore: " + arvore.quantidadeElementos());
                 System.out.println("Altura da árvore: " + arvore.getAltura());
                 /*
-                 TODO: imprimir maior e menor elementos utilizando a função imprimeAluno()
+                 * TODO: imprimir maior e menor elementos utilizando a função imprimeAluno()
                  */
-                System.out.println("Maior elemento: " + arvore.getMaiorElemento());
-                System.out.println("Menor elemento: " + arvore.getMenorElemento());
-                System.out.println("Piores casos de busca: " + arvore.getPioresCasos() + "\n");
+                System.out.println("   Maior elemento: " + arvore.getMaiorElemento());
+                System.out.println("   Menor elemento: " + arvore.getMenorElemento());
+                System.out.println("   Piores casos de busca: " + arvore.getPioresCasos() + "\n");
             } else if (escolha == 2) {
-                System.out.println("Digite o número da matrícula a ser procurada: ");
+                System.out.println("   Digite o número da matrícula a ser procurada: ");
                 int matricula = userinput.nextInt();
-                imprimeMatricula(encontraMatricula(arvore.getRaiz(), matricula, 0).getElemento(), matricula);
+                imprimeMatricula(encontraMatricula(arvore, matricula, 0).getElemento(), matricula);
             } else if (escolha == 3) {
                 System.out.println("Digite o número da matrícula a ser excluída: ");
                 int matricula = userinput.nextInt();
@@ -152,42 +152,39 @@ public class App {
                 + aluno.getNome() + "\n      Nota: " + aluno.getNota() + "\n");
     }
 
-    /*
-     * TODO: remodelar para funcionar com loop
-     */
     /**
-     * @param Atual       - Nó contendo uma estrutura Aluno, quando a função for
-     *                    chamada deve ser sempre a raiz da árvore onde a matrícula
-     *                    deve ser procurada
+     * @param arvore      - Arvore binária onde a matrícula deve ser procurada
      * @param matricula   - inteiro que representa a matrícula a ser procurada
      * @param percorridos - inteiro, utilize 0 quando desejar que o número de
      *                    elementos percorridos até chegar à matricula desejada seja
      *                    contabilizado/impresso ou -1 para que não seja
      */
-    public static No<Aluno> encontraMatricula(No<Aluno> Atual, int matricula, int percorridos) {
-        No<Aluno> resultado;
+    public static No<Aluno> encontraMatricula(ArvoreBinaria<Aluno> arvore, int matricula, int percorridos) {
+        No<Aluno> Atual = arvore.getRaiz();
+        No<Aluno> resultado = null;
         Aluno falha = new Aluno(-1, " ", " ");
-        resultado = new No<Aluno>(falha);
-        if (Atual.getElemento().getMatricula() == matricula) {
-            resultado = Atual;
-            if (percorridos >= 0)
-                System.out.println("   Elementos percorridos: " + percorridos);
-        } else {
-            if (percorridos >= 0)
-                percorridos++;
-            if ((Atual.getElemento().getMatricula() > matricula) && (Atual.getEsquerda() != null)) {
-                Atual = Atual.getEsquerda();
-                resultado = encontraMatricula(Atual, matricula, percorridos);
-            } else if (Atual.getDireita() != null) {
-                Atual = Atual.getDireita();
-                resultado = encontraMatricula(Atual, matricula, percorridos);
+        while (resultado == null) {
+            if (Atual.getElemento().getMatricula() == matricula) {
+                resultado = Atual;
+                if (percorridos >= 0)
+                    System.out.println("   Elementos percorridos: " + percorridos);
+            } else {
+                if (percorridos >= 0)
+                    percorridos++;
+                if ((Atual.getElemento().getMatricula() > matricula) && (Atual.getEsquerda() != null))
+                    Atual = Atual.getEsquerda();
+                else if ((Atual.getElemento().getMatricula() < matricula) && (Atual.getDireita() != null))
+                    Atual = Atual.getDireita();
+                else
+                    resultado = new No<Aluno>(falha);
             }
         }
         return resultado;
     }
 
     /**
-     * @param Cadastro - Nó que contem o aluno com as informações que devem ser inseridas
+     * @param Cadastro  - Nó que contem o aluno com as informações que devem ser
+     *                  inseridas
      * @param matricula - inteiro com valor da matrícula da estrutura Aluno no Nó
      */
     public static void imprimeMatricula(Aluno Cadastro, int matricula) {
@@ -200,7 +197,7 @@ public class App {
     }
 
     public static void removeMatricula(ArvoreBinaria<Aluno> arvore, int matricula) {
-        No<Aluno> Alvo = encontraMatricula(arvore.getRaiz(), matricula, -1);
+        No<Aluno> Alvo = encontraMatricula(arvore, matricula, -1);
         imprimeMatricula(Alvo.getElemento(), matricula);
         arvore.remove(Alvo.getElemento());
         System.out.println("   Matrícula [" + matricula + "] excluída!\n");

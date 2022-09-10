@@ -18,10 +18,12 @@ public class ArvoreBinaria<T extends Comparable> {
   }
 
   private No<T> comparaNoAtualComProximo(No<T> noPosicao, No<T> proximoNo, T elemento) {
-    /* 
-    ? Não seria interessante substituir esse parâmetro 'proximoNo' por uma variável interna da função?
-    ? da forma como está implementado agora, causou um pouco de confusão porque, até onde entendi, o valor passado no parâmetro é irrelevante
-    */
+    /*
+     ? Não seria interessante substituir esse parâmetro 'proximoNo' por uma
+     ? variável interna da função?
+     ? da forma como está implementado agora, causou um pouco de confusão porque,
+     ? até onde entendi, o valor passado no parâmetro é irrelevante
+     */
     if (noPosicao.getElemento().compareTo(elemento) < 0) {
       proximoNo = noPosicao.getEsquerda();
     } else if (noPosicao.getElemento().compareTo(elemento) == 0) {
@@ -97,9 +99,11 @@ public class ArvoreBinaria<T extends Comparable> {
     boolean encontrouNo = false;
     while (!encontrouNo && proximoNo != null) {
       /*
-      ? Pode ser interessante mover essa chamada da função para depois da checagem noPosicao.getElemento().compareTo(elemento) == 0
-      ? Assim evitariamos situações onde é realizada a operação de atribuir um valor ao proximoNo sendo que o noPosicao já encontrou o no desejado
-      */
+       ? Pode ser interessante mover essa chamada da função para depois da checagem
+       ? noPosicao.getElemento().compareTo(elemento) == 0
+       ? Assim evitariamos situações onde é realizada a operação de atribuir um
+       ? valor ao proximoNo sendo que o noPosicao já encontrou o no desejado
+       */
       proximoNo = comparaNoAtualComProximo(noPosicao, proximoNo, elemento);
       if (noPosicao.getElemento().compareTo(elemento) == 0) {
         encontrouNo = true;
@@ -221,7 +225,7 @@ public class ArvoreBinaria<T extends Comparable> {
 
   private T buscandoPiorCaso(No<T> no, int nivel, ArrayList<T> pioresCasos) {
     if (no != null) {
-      if (this.getAltura() == nivel){
+      if (this.getAltura() == nivel) {
         pioresCasos.add(no.getElemento());
       }
       nivel++;
@@ -229,9 +233,9 @@ public class ArvoreBinaria<T extends Comparable> {
         buscandoPiorCaso(no.getEsquerda(), nivel, pioresCasos);
       if (no.getDireita() != null)
         buscandoPiorCaso(no.getDireita(), nivel, pioresCasos);
-    } 
+    }
     return null;
-    
+
   }
 
 }
