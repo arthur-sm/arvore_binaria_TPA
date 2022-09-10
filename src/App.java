@@ -3,15 +3,13 @@
    @ Autor: Arthur Miguel e Cleber de Jesus Salustiano
    @ Criado em: 07/09/2022 11:00
    @ Editado por: Arthur SM
-   @ Data da edição: 10/09/22 17:23:39
+   @ Data da edição: 10/09/22 18:42:05
    @ Descrição: Código de aplicação da Primeira etapa do trabalho prático de árvores
  **********/
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 import arvoreBinaria.ArvoreBinaria;
@@ -113,29 +111,38 @@ public class App {
 
     public static void Menu(ArvoreBinaria<Aluno> arvore) {
         Scanner userinput = new Scanner(System.in);
+        int matricula;
+        String nome, nota;
+        Aluno aluno_novo = null;
         while (true) {
             System.out.println(
                     "Escolha uma opção: \n1 - Estatísticas\n2 - Busca por Matrícula\n3 - Exclusão por Matrícula\n4 - Incluir Aluno\n5 - Sair");
             int escolha = userinput.nextInt();
             if (escolha == 1) {
-                // Exibir estatísticas – Deve exibir a quantidade total de elementos, a altura
-                // da árvore, o maior e o menor elemento e o pior caso de busca.
-                System.out.println("\nQuantidade total de elementos da árvore: " + arvore.quantidadeElementos());
-                System.out.println("Altura da árvore: " + arvore.getAltura());
-                /*
-                 * TODO: imprimir maior e menor elementos utilizando a função imprimeAluno()
-                 */
-                System.out.println("   Maior elemento: " + arvore.getMaiorElemento());
-                System.out.println("   Menor elemento: " + arvore.getMenorElemento());
-                System.out.println("   Piores casos de busca: " + arvore.getPioresCasos() + "\n");
+                estatisticas(arvore);
             } else if (escolha == 2) {
-                System.out.println("   Digite o número da matrícula a ser procurada: ");
-                int matricula = userinput.nextInt();
+                System.out.print("   Digite o número da matrícula a ser procurada: ");
+                matricula = userinput.nextInt();
                 imprimeMatricula(encontraMatricula(arvore, matricula, 0).getElemento(), matricula);
             } else if (escolha == 3) {
-                System.out.println("Digite o número da matrícula a ser excluída: ");
-                int matricula = userinput.nextInt();
+                System.out.print("Digite o número da matrícula a ser excluída: ");
+                matricula = userinput.nextInt();
                 removeMatricula(arvore, matricula);
+            } else if (escolha == 4) {
+                System.out.print("Digite a matrícula: ");
+                matricula = userinput.nextInt();
+                System.out.print("Digite o nome: ");
+                userinput.nextLine(); // por algum motivo esse input é necessário para conseguir digitar o nome e
+                                      // receber o valor de acordo
+                nome = userinput.nextLine();
+                System.out.print("Digite a nota: ");
+                nota = userinput.nextLine();
+                aluno_novo = new Aluno(matricula, nome, nota);
+                if (arvore.insere(aluno_novo) == true)
+                    System.out.println("Novo Aluno [" + aluno_novo.toString() + "] inserido com sucesso");
+                else
+                    System.out.println(
+                            "Erro ao cadastrar aluno [" + aluno_novo.toString() + "] - Matrícula já existente");
             } else if (escolha == 5) {
                 // Sair: o programa deve percorrer a árvore usando caminhamento "em ordem" e
                 // gerar um arquivo em que cada linha apresentará a matrícula, o nome e a nota
@@ -147,9 +154,14 @@ public class App {
         }
     }
 
-    public static void imprimeAluno(Aluno aluno) {
-        System.out.println("      Matrícula: " + aluno.getMatricula() + "\n      Nome: "
-                + aluno.getNome() + "\n      Nota: " + aluno.getNota() + "\n");
+    public static void estatisticas(ArvoreBinaria<Aluno> arvore) {
+        System.out.println(" Quantidade total de elementos da árvore: " + arvore.quantidadeElementos());
+        System.out.println(" Altura da árvore: " + arvore.getAltura());
+        System.out.println(" Maior elemento: ");
+        arvore.getMaiorElemento().imprimeFormatado();
+        System.out.println(" Menor elemento: ");
+        arvore.getMenorElemento().imprimeFormatado();
+        System.out.println(" Piores casos de busca: " + arvore.getPioresCasos() + "\n");
     }
 
     /**
@@ -192,7 +204,7 @@ public class App {
             System.out.println("   Matricula [" + matricula + "] não encontrada\n");
         } else {
             System.out.println("   Dados da matrícula:");
-            imprimeAluno(Cadastro);
+            Cadastro.imprimeFormatado();
         }
     }
 
