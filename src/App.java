@@ -3,7 +3,7 @@
    @ Autor: Arthur Miguel e Cleber de Jesus Salustiano
    @ Criado em: 07/09/2022 11:00
    @ Editado por: Arthur SM
-   @ Data da edição: 11/09/22 22:02:07
+   @ Data da edição: 11/09/22 22:20:43
    @ Descrição: Código de aplicação da Primeira etapa do trabalho prático de árvores
  **********/
 
@@ -166,8 +166,9 @@ public class App {
 
     public static void escreveArvore(String nomearquivo, String ext, ArvoreBinaria<Aluno> conteudo) {
         Date d = new Date();
+        String arquivo = nomearquivo + "_" + (d.getTime() / 1000) + "." + ext;
         try {
-            FileWriter myWriter = new FileWriter(nomearquivo + "_" + (d.getTime() / 1000) + "." + ext);
+            FileWriter myWriter = new FileWriter(arquivo);
             conteudo.caminhaEmOrdem().forEach(matricula -> {
                 try {
                     myWriter.write(
