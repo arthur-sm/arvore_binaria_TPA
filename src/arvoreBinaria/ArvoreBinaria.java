@@ -93,50 +93,6 @@ public class ArvoreBinaria<T extends Comparable> {
   }
 
   public boolean remove(T elemento) {
-    /**
-     * 
-     * No<T> noPosicao = this.raiz;
-     * No<T> proximoNo = noPosicao;
-     * No<T> noAnterior = null;
-     * boolean encontrouNo = false;
-     * while (!encontrouNo && proximoNo != null) {
-     * /*
-     * ? Pode ser interessante mover essa chamada da função para depois da checagem
-     * ? noPosicao.getElemento().compareTo(elemento) == 0
-     * ? Assim evitariamos situações onde é realizada a operação de atribuir um
-     * ? valor ao proximoNo sendo que o noPosicao já encontrou o no desejado
-     * //
-     * proximoNo = comparaNoAtualComProximo(noPosicao, proximoNo, elemento);
-     * if (noPosicao.getElemento().compareTo(elemento) == 0) {
-     * encontrouNo = true;
-     * }
-     * if (!encontrouNo) {
-     * noAnterior = noPosicao;
-     * noPosicao = proximoNo;
-     * }
-     * }
-     * if (!encontrouNo) {
-     * return false;
-     * } else if (noPosicao.getDireita() != null) {
-     * No<T> noBuscado = noPosicao.getDireita();
-     * proximoNo = noBuscado;
-     * while (proximoNo.getEsquerda() != null) {
-     * noBuscado = proximoNo;
-     * proximoNo = noBuscado.getEsquerda();
-     * }
-     * setaValorDoNoAnterior(noAnterior, noPosicao, noBuscado);
-     * noBuscado.setEsquerda(noPosicao.getEsquerda());
-     * noPosicao = null;
-     * return true;
-     * } else if (noPosicao.getEsquerda() != null) {
-     * setaValorDoNoAnterior(noAnterior, noPosicao, noPosicao.getEsquerda());
-     * noPosicao = null;
-     * return true;
-     * } else {
-     * setaValorDoNoAnterior(noAnterior, noPosicao, null);
-     * return true;
-     * }
-     */
     No<T> no = this.raiz;
     no = removendo(no, elemento);
     if (no == null) {
