@@ -19,12 +19,12 @@ public class ArvoreBinaria<T extends Comparable> {
 
   private No<T> comparaNoAtualComProximo(No<T> noPosicao, No<T> proximoNo, T elemento) {
     /*
-     ? Não seria interessante substituir esse parâmetro 'proximoNo' por uma
-     ? variável interna da função?
-     ? da forma como está implementado agora, causou um pouco de confusão porque,
-     ? até onde entendi, o valor passado no parâmetro é irrelevante
+     * ? Não seria interessante substituir esse parâmetro 'proximoNo' por uma
+     * ? variável interna da função?
+     * ? da forma como está implementado agora, causou um pouco de confusão porque,
+     * ? até onde entendi, o valor passado no parâmetro é irrelevante
      */
-    if (noPosicao.getElemento().compareTo(elemento) < 0) {
+    if (noPosicao.getElemento().compareTo(elemento) > 0) {
       proximoNo = noPosicao.getEsquerda();
     } else if (noPosicao.getElemento().compareTo(elemento) == 0) {
       proximoNo = null;
@@ -47,17 +47,17 @@ public class ArvoreBinaria<T extends Comparable> {
         noPosicao = proximoNo;
         proximoNo = comparaNoAtualComProximo(noPosicao, proximoNo, elemento);
       }
-      if (noPosicao.getElemento().compareTo(elemento) < 0) {
+      if (noPosicao.getElemento().compareTo(elemento) > 0) {
         noPosicao.setEsquerda(novoNo);
         return true;
-      } else if (noPosicao.getElemento().compareTo(elemento) > 0) {
+      } else if (noPosicao.getElemento().compareTo(elemento) < 0) {
         noPosicao.setDireita(novoNo);
         return true;
       } else {
         /*
          * Pensar numa forma de retornar isso.
          * Pensei em provavelmente um Boolean, para falso, caso não seja inserido.
-         ! acredito que essa seja a melhor opção
+         * ! acredito que essa seja a melhor opção
          */
         // System.out.println("Esse elemento já existe na árvore");
         return false;
@@ -93,46 +93,87 @@ public class ArvoreBinaria<T extends Comparable> {
   }
 
   public boolean remove(T elemento) {
-    No<T> noPosicao = this.raiz;
-    No<T> proximoNo = noPosicao;
-    No<T> noAnterior = null;
-    boolean encontrouNo = false;
-    while (!encontrouNo && proximoNo != null) {
-      /*
-       ? Pode ser interessante mover essa chamada da função para depois da checagem
-       ? noPosicao.getElemento().compareTo(elemento) == 0
-       ? Assim evitariamos situações onde é realizada a operação de atribuir um
-       ? valor ao proximoNo sendo que o noPosicao já encontrou o no desejado
-       */
-      proximoNo = comparaNoAtualComProximo(noPosicao, proximoNo, elemento);
-      if (noPosicao.getElemento().compareTo(elemento) == 0) {
-        encontrouNo = true;
-      }
-      if (!encontrouNo) {
-        noAnterior = noPosicao;
-        noPosicao = proximoNo;
-      }
-    }
-    if (!encontrouNo) {
+    /**
+     * 
+     * No<T> noPosicao = this.raiz;
+     * No<T> proximoNo = noPosicao;
+     * No<T> noAnterior = null;
+     * boolean encontrouNo = false;
+     * while (!encontrouNo && proximoNo != null) {
+     * /*
+     * ? Pode ser interessante mover essa chamada da função para depois da checagem
+     * ? noPosicao.getElemento().compareTo(elemento) == 0
+     * ? Assim evitariamos situações onde é realizada a operação de atribuir um
+     * ? valor ao proximoNo sendo que o noPosicao já encontrou o no desejado
+     * //
+     * proximoNo = comparaNoAtualComProximo(noPosicao, proximoNo, elemento);
+     * if (noPosicao.getElemento().compareTo(elemento) == 0) {
+     * encontrouNo = true;
+     * }
+     * if (!encontrouNo) {
+     * noAnterior = noPosicao;
+     * noPosicao = proximoNo;
+     * }
+     * }
+     * if (!encontrouNo) {
+     * return false;
+     * } else if (noPosicao.getDireita() != null) {
+     * No<T> noBuscado = noPosicao.getDireita();
+     * proximoNo = noBuscado;
+     * while (proximoNo.getEsquerda() != null) {
+     * noBuscado = proximoNo;
+     * proximoNo = noBuscado.getEsquerda();
+     * }
+     * setaValorDoNoAnterior(noAnterior, noPosicao, noBuscado);
+     * noBuscado.setEsquerda(noPosicao.getEsquerda());
+     * noPosicao = null;
+     * return true;
+     * } else if (noPosicao.getEsquerda() != null) {
+     * setaValorDoNoAnterior(noAnterior, noPosicao, noPosicao.getEsquerda());
+     * noPosicao = null;
+     * return true;
+     * } else {
+     * setaValorDoNoAnterior(noAnterior, noPosicao, null);
+     * return true;
+     * }
+     */
+    No<T> no = this.raiz;
+    no = removendo(no, elemento);
+    if (no == null) {
       return false;
-    } else if (noPosicao.getDireita() != null) {
-      No<T> noBuscado = noPosicao.getDireita();
-      proximoNo = noBuscado;
-      while (proximoNo.getEsquerda() != null) {
-        noBuscado = proximoNo;
-        proximoNo = noBuscado.getEsquerda();
-      }
-      setaValorDoNoAnterior(noAnterior, noPosicao, noBuscado);
-      noBuscado.setEsquerda(noPosicao.getEsquerda());
-      noPosicao = null;
-      return true;
-    } else if (noPosicao.getEsquerda() != null) {
-      setaValorDoNoAnterior(noAnterior, noPosicao, noPosicao.getEsquerda());
-      noPosicao = null;
-      return true;
     } else {
-      setaValorDoNoAnterior(noAnterior, noPosicao, null);
       return true;
+    }
+  }
+
+  private No<T> removendo(No<T> no, T elemento) {
+    if (no == null) {
+      return null;
+    } else if (no.getElemento().compareTo(elemento) > 0) {
+      no.setEsquerda(removendo(no.getEsquerda(), elemento));
+      return no;
+    } else if (no.getElemento().compareTo(elemento) < 0) {
+      no.setDireita(removendo(no.getDireita(), elemento));
+      return no;
+    } else if (no.getEsquerda() == null && no.getDireita() == null) {
+      no = null;
+      return null;
+    } else if (no.getEsquerda() != null && no.getDireita() != null) {
+      No<T> proximoNo = no.getEsquerda();
+      while (proximoNo.getDireita() != null) {
+        proximoNo = proximoNo.getDireita();
+      }
+      no.setElemento(proximoNo.getElemento());
+      proximoNo.setElemento(elemento);
+      no.setEsquerda(removendo(no.getEsquerda(), elemento));
+      return no;
+    } else {
+      No<T> proximoNo;
+      if (no.getEsquerda() != null)
+        proximoNo = no.getEsquerda();
+      else
+        proximoNo = no.getDireita();
+      return proximoNo;
     }
   }
 
@@ -191,7 +232,7 @@ public class ArvoreBinaria<T extends Comparable> {
     }
   }
 
-  public int quantidadeElementos() {
+  public int getQuantidadeElementos() {
     ArrayList<T> elementos = caminhaEmOrdem();
     return elementos.size();
   }

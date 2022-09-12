@@ -7,7 +7,7 @@ public class Aluno implements Comparable<Aluno> {
 
   @Override
   public int compareTo(Aluno aluno) {
-    if (matricula > aluno.getMatricula()) {
+    if (matricula < aluno.getMatricula()) {
       return -1;
     } else if (matricula == aluno.getMatricula()) {
       return 0;

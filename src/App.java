@@ -37,7 +37,18 @@ public class App {
             System.err.printf("Erro na abertura do arquivo: %s.\n",
                     e.getMessage());
         }
-        Menu(arvore);
+        // Menu(arvore);
+        System.out.println(arvore.getQuantidadeElementos());
+        Aluno aoba = new Aluno(589, "", "nota");
+        Aluno talis = new Aluno(11971, "", "nota");
+        Aluno carlos = new Aluno(10045, "", "nota");
+        Aluno brenno = new Aluno(3463, "", "nota");
+        arvore.remove(aoba);
+        arvore.remove(talis);
+        arvore.remove(carlos);
+        arvore.remove(brenno);
+        System.out.println(arvore.getQuantidadeElementos());
+        System.out.println(arvore.getRaiz());
         /*
          * testes
          * System.out.println(arvore.getRaiz());
@@ -154,7 +165,7 @@ public class App {
     }
 
     public static void estatisticas(ArvoreBinaria<Aluno> arvore) {
-        System.out.println(" Quantidade total de elementos da árvore: " + arvore.quantidadeElementos());
+        System.out.println(" Quantidade total de elementos da árvore: " + arvore.getQuantidadeElementos());
         System.out.println(" Altura da árvore: " + arvore.getAltura());
         System.out.println(" Maior elemento: ");
         arvore.getMaiorElemento().imprimeFormatado();
