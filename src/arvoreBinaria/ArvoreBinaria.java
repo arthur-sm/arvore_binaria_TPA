@@ -9,21 +9,36 @@ import java.util.ArrayList;
 public class ArvoreBinaria<T extends Comparable> {
   private No<T> raiz;
 
+  /**
+   * Retorna a raiz da árvore
+   * @return
+   */
   public No<T> getRaiz() {
     return raiz;
   }
 
+  /**
+   * Permite alterar a raíz da árvore
+   * @param raiz
+   */
   public void setRaiz(No<T> raiz) {
     this.raiz = raiz;
   }
 
-  private No<T> comparaNoAtualComProximo(No<T> noPosicao, No<T> proximoNo, T elemento) {
-    /*
-     * ? Não seria interessante substituir esse parâmetro 'proximoNo' por uma
-     * ? variável interna da função?
-     * ? da forma como está implementado agora, causou um pouco de confusão porque,
-     * ? até onde entendi, o valor passado no parâmetro é irrelevante
-     */
+  /**
+   * Essa função é utilizada dentro 
+   * das funções da classe, onde faz a comparação
+   * informando se o elemento está ou não em um nó.
+   * Caso esteja o próximo nó será null, caso não esteja
+   * será verificado se o valor do elemento é maior ou menor
+   * que o valor existente no nó. 
+   * 
+   * @param noPosicao
+   * @param elemento
+   * @return
+   */
+  private No<T> comparaNoAtualComProximo(No<T> noPosicao, T elemento) {
+    No<T> proximoNo = null;
     if (noPosicao.getElemento().compareTo(elemento) > 0) {
       proximoNo = noPosicao.getEsquerda();
     } else if (noPosicao.getElemento().compareTo(elemento) == 0) {
@@ -34,7 +49,12 @@ public class ArvoreBinaria<T extends Comparable> {
     return proximoNo;
   }
 
-  /* Insere um novo elemento (objeto) dentro da arvore */
+  /**
+   * Essa função insere um novo 
+   * elemento (objeto) dentro da arvore
+   * @param elemento
+   * @return
+   */
   public boolean insere(T elemento) {
     No<T> novoNo = new No<T>(elemento);
     if (raiz == null) {
@@ -45,7 +65,7 @@ public class ArvoreBinaria<T extends Comparable> {
       No<T> proximoNo = noPosicao;
       while (proximoNo != null) {
         noPosicao = proximoNo;
-        proximoNo = comparaNoAtualComProximo(noPosicao, proximoNo, elemento);
+        proximoNo = comparaNoAtualComProximo(noPosicao, elemento);
       }
       if (noPosicao.getElemento().compareTo(elemento) > 0) {
         noPosicao.setEsquerda(novoNo);
@@ -54,17 +74,18 @@ public class ArvoreBinaria<T extends Comparable> {
         noPosicao.setDireita(novoNo);
         return true;
       } else {
-        /*
-         * Pensar numa forma de retornar isso.
-         * Pensei em provavelmente um Boolean, para falso, caso não seja inserido.
-         * ! acredito que essa seja a melhor opção
-         */
-        // System.out.println("Esse elemento já existe na árvore");
         return false;
       }
     }
   }
 
+  /**
+   * Essa função busca por um elemento na árvore
+   * retornando true se existir e false se o elemento
+   * não existir na árvore.
+   * @param elemento
+   * @return
+   */
   public boolean busca(T elemento) { // mudar nome para algo como 'Existe'?
     if (raiz.getElemento().compareTo(elemento) == 0) {
       return true;
@@ -73,25 +94,23 @@ public class ArvoreBinaria<T extends Comparable> {
     No<T> proximoNo = noPosicao;
     while (proximoNo != null) {
       noPosicao = proximoNo;
-      proximoNo = comparaNoAtualComProximo(noPosicao, proximoNo, elemento);
+      proximoNo = comparaNoAtualComProximo(noPosicao, elemento);
     }
     if (noPosicao.getElemento().compareTo(elemento) == 0) {
       return true;
     }
     return false;
   }
-
-  private void setaValorDoNoAnterior(No<T> noAnterior, No<T> noPosicao, No<T> noPosterior) {
-    if (noAnterior == null) {
-      this.raiz = noPosterior;
-    } else if (noAnterior != null && noAnterior.getDireita() != null
-        && noAnterior.getDireita().getElemento().compareTo(noPosicao.getElemento()) == 0) {
-      noAnterior.setDireita(noPosterior);
-    } else {
-      noAnterior.setEsquerda(noPosterior);
-    }
-  }
-
+  
+  /**
+   * Essa função remove um elemento
+   * dentro da árvore retornando true
+   * se ele foi excluído e false 
+   * se ele não tiver sido excluído.
+   * 
+   * @param elemento
+   * @return
+   */
   public boolean remove(T elemento) {
     No<T> no = this.raiz;
     no = removendo(no, elemento);
@@ -102,6 +121,15 @@ public class ArvoreBinaria<T extends Comparable> {
     }
   }
 
+  /**
+   * Essa função é utilizada função remover
+   * para ser feito uma recursão, onde busca pelo elemento
+   * e ao excluir reorganiza a árvore, de forma a manter todos os
+   * elementos.
+   * @param no
+   * @param elemento
+   * @return
+   */
   private No<T> removendo(No<T> no, T elemento) {
     if (no == null) {
       return null;
@@ -133,11 +161,22 @@ public class ArvoreBinaria<T extends Comparable> {
     }
   }
 
+  /**
+   * Retorna a altura da arvore
+   * @return
+   */
   public int getAltura() {
     No<T> no = this.raiz;
     return altura(no);
   }
-
+  
+  /**
+   * Essa função é utilizada
+   * de forma recursiva para fazer o calculo da 
+   * raíz da árvore. Utilizada pela função getAltura.
+   * @param no
+   * @return
+   */
   private int altura(No<T> no) {
     if (no == null) {
       return -1;
@@ -152,6 +191,12 @@ public class ArvoreBinaria<T extends Comparable> {
     }
   }
 
+  /**
+   * Essa função retorna um ArrayList,
+   * em ordem crescente, dos elementos existentes
+   * dentro da árvore
+   * @return
+   */
   public ArrayList<T> caminhaEmOrdem() {
     No<T> no = this.raiz;
     ArrayList<T> emOrdem = new ArrayList<>();
@@ -160,6 +205,13 @@ public class ArvoreBinaria<T extends Comparable> {
     return emOrdem;
   }
 
+  /**
+   * Essa função é utilizada pela função
+   * caminhaEmOrdem, onde essa faz o ArrayList
+   * de forma recursiva.
+   * @param no
+   * @param emOrdem
+   */
   private void caminhandoEmOrdem(No<T> no, ArrayList<T> emOrdem) {
     if (no != null) {
       if (no.getElemento() != null)
@@ -170,6 +222,12 @@ public class ArvoreBinaria<T extends Comparable> {
     }
   }
 
+  /**
+   * Essa função retorna um ArrayList
+   * dos elementos da árvore em ordem dos níveis 
+   * existentes dentro da árvore.
+   * @return
+   */
   public ArrayList<T> caminhaEmNivel() {
     No<T> no = this.raiz;
     ArrayList<T> emNivel = new ArrayList<>();
@@ -178,6 +236,13 @@ public class ArvoreBinaria<T extends Comparable> {
     return emNivel;
   }
 
+  /**
+   * Essa função é utilizada pela função
+   * caminhaEmNivel, onde essa faz o ArrayList
+   * de forma recursiva.
+   * @param no
+   * @param emNivel
+   */
   private void caminhandoEmNivel(No<T> no, ArrayList<T> emNivel) {
     if (no != null) {
       emNivel.add(no.getElemento());
@@ -188,11 +253,21 @@ public class ArvoreBinaria<T extends Comparable> {
     }
   }
 
+  /**
+   * Essa função retorna a quantidade de elementos 
+   * existentes na arvore.
+   * @return
+   */
   public int getQuantidadeElementos() {
     ArrayList<T> elementos = caminhaEmOrdem();
     return elementos.size();
   }
 
+  /**
+   * Essa função retorna o menor elemento
+   * da árvore.
+   * @return
+   */
   public T getMenorElemento() {
     No<T> no = this.raiz;
     No<T> proximoNo = no;
@@ -203,6 +278,11 @@ public class ArvoreBinaria<T extends Comparable> {
     return no.getElemento();
   }
 
+  /**
+   * Essa função retorna o maior elemento
+   * da árvore
+   * @return
+   */
   public T getMaiorElemento() {
     No<T> no = this.raiz;
     No<T> proximoNo = no;
@@ -213,6 +293,11 @@ public class ArvoreBinaria<T extends Comparable> {
     return no.getElemento();
   }
 
+  /**
+   * Essa função um ArrayList contendo
+   * os piores casos de busca dentro da árvore
+   * @return
+   */
   public ArrayList<T> getPioresCasos() {
     No<T> no = this.raiz;
     ArrayList<T> pioresCasos = new ArrayList<>();
@@ -220,6 +305,17 @@ public class ArvoreBinaria<T extends Comparable> {
     return pioresCasos;
   }
 
+  /**
+   * Essa função busca por cada pior caso 
+   * existente dentro da árvore, ou seja, 
+   * todos os elementos que possuem o nível
+   * ígual a altura da árvore. 
+   * Utilizado pela função pioresCasos()
+   * @param no
+   * @param nivel
+   * @param pioresCasos
+   * @return
+   */
   private T buscandoPiorCaso(No<T> no, int nivel, ArrayList<T> pioresCasos) {
     if (no != null) {
       if (this.getAltura() == nivel) {
