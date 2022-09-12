@@ -3,7 +3,7 @@
    @ Autor: Arthur Miguel e Cleber de Jesus Salustiano
    @ Criado em: 07/09/2022 11:00
    @ Editado por: Arthur SM
-   @ Data da edição: 11/09/22 22:20:43
+   @ Data da edição: 12/09/22 08:35:30
    @ Descrição: Código de aplicação da Primeira etapa do trabalho prático de árvores
  **********/
 
@@ -12,7 +12,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.Date;
 
 import arvoreBinaria.ArvoreBinaria;
 import arvoreBinaria.No;
@@ -165,8 +164,9 @@ public class App {
     }
 
     public static void escreveArvore(String nomearquivo, String ext, ArvoreBinaria<Aluno> conteudo) {
-        Date d = new Date();
-        String arquivo = nomearquivo + "_" + (d.getTime() / 1000) + "." + ext;
+        //Tempo em milisegundos divido por 60000 -> tempo em minutos
+        long d = System.currentTimeMillis() / 60000;
+        String arquivo = nomearquivo + "_" + d + "." + ext;
         try {
             FileWriter myWriter = new FileWriter(arquivo);
             conteudo.caminhaEmOrdem().forEach(matricula -> {
@@ -179,7 +179,7 @@ public class App {
                 }
             });
             myWriter.close();
-            System.out.println("Arquivo de árvore em ordem gerado com sucesso!");
+            System.out.println("Arquivo de árvore em ordem [" + arquivo + "] gerado com sucesso!");
         } catch (IOException e) {
             System.out.println("Erro ao escrever/gerar arquivo " + nomearquivo);
             e.printStackTrace();
