@@ -3,14 +3,16 @@
    @ Autor: Arthur Miguel e Cleber de Jesus Salustiano
    @ Criado em: 07/09/2022 11:00
    @ Editado por: Arthur SM
-   @ Data da edição: 10/09/22 18:42:05
+   @ Data da edição: 11/09/22 22:02:07
    @ Descrição: Código de aplicação da Primeira etapa do trabalho prático de árvores
  **********/
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.Date;
 
 import arvoreBinaria.ArvoreBinaria;
 import arvoreBinaria.No;
@@ -20,7 +22,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<>();
         try {
-            FileReader arq = new FileReader("./teste/teste_10000.txt");
+            FileReader arq = new FileReader("./teste/teste_100.txt");
             BufferedReader lerArq = new BufferedReader(arq);
 
             String value = lerArq.readLine();
@@ -121,7 +123,7 @@ public class App {
             if (escolha == 1) {
                 estatisticas(arvore);
             } else if (escolha == 2) {
-                System.out.print("   Digite o número da matrícula a ser procurada: ");
+                System.out.print("Digite o número da matrícula a ser procurada: ");
                 matricula = userinput.nextInt();
                 imprimeMatricula(encontraMatricula(arvore, matricula, 0).getElemento(), matricula);
             } else if (escolha == 3) {
@@ -144,10 +146,8 @@ public class App {
                     System.out.println(
                             "Erro ao cadastrar aluno [" + aluno_novo.toString() + "] - Matrícula já existente");
             } else if (escolha == 5) {
-                // Sair: o programa deve percorrer a árvore usando caminhamento "em ordem" e
-                // gerar um arquivo em que cada linha apresentará a matrícula, o nome e a nota
-                // de um aluno, sempre separados por ;.
-                System.out.println("Caminhando pela árvore em ordem: \n" + arvore.caminhaEmOrdem());
+                System.out.println("\nGerando arquivo com elementos da árvor em ordem...");
+                escreveArvore("arvore_ordem", "txt", arvore);
                 userinput.close();
                 break;
             }
@@ -162,6 +162,27 @@ public class App {
         System.out.println(" Menor elemento: ");
         arvore.getMenorElemento().imprimeFormatado();
         System.out.println(" Piores casos de busca: " + arvore.getPioresCasos() + "\n");
+    }
+
+    public static void escreveArvore(String nomearquivo, String ext, ArvoreBinaria<Aluno> conteudo) {
+        Date d = new Date();
+        try {
+            FileWriter myWriter = new FileWriter(nomearquivo + "_" + (d.getTime() / 1000) + "." + ext);
+            conteudo.caminhaEmOrdem().forEach(matricula -> {
+                try {
+                    myWriter.write(
+                            matricula.getMatricula() + ";" + matricula.getNome() + ";" + matricula.getNota() + "\n");
+                } catch (IOException e) {
+                    System.out.println("Erro ao escrever elemento " + matricula.toString());
+                    e.printStackTrace();
+                }
+            });
+            myWriter.close();
+            System.out.println("Arquivo de árvore em ordem gerado com sucesso!");
+        } catch (IOException e) {
+            System.out.println("Erro ao escrever/gerar arquivo " + nomearquivo);
+            e.printStackTrace();
+        }
     }
 
     /**
