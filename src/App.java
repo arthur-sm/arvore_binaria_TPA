@@ -3,7 +3,7 @@
    @ Autor: Arthur Miguel e Cleber de Jesus Salustiano
    @ Criado em: 07/09/2022 11:00
    @ Editado por: Arthur SM
-   @ Data da edição: 12/09/22 08:35:30
+   @ Data da edição: 14/09/22 09:05:45
    @ Descrição: Código de aplicação da Primeira etapa do trabalho prático de árvores
  **********/
 
@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import arvoreBinaria.ArvoreBinaria;
-import arvoreBinaria.No;
 import arvoreBinariaAluno.Aluno;
 
 public class App {
@@ -37,8 +36,9 @@ public class App {
             System.err.printf("Erro na abertura do arquivo: %s.\n",
                     e.getMessage());
         }
-        // Menu(arvore);
-        System.out.println(arvore.getQuantidadeElementos());
+        System.out.println(arvore.remove(new Aluno(308, "nome", "nota")));
+        Menu(arvore);
+        /*System.out.println(arvore.getQuantidadeElementos());
         Aluno aoba = new Aluno(589, "", "nota");
         Aluno talis = new Aluno(11971, "", "nota");
         Aluno carlos = new Aluno(10045, "", "nota");
@@ -49,7 +49,6 @@ public class App {
         arvore.remove(brenno);
         System.out.println(arvore.getQuantidadeElementos());
         System.out.println(arvore.getRaiz());
-        /*
          * testes
          * System.out.println(arvore.getRaiz());
          * System.out.println(arvore.getAltura());
@@ -135,7 +134,7 @@ public class App {
             } else if (escolha == 2) {
                 System.out.print("Digite o número da matrícula a ser procurada: ");
                 matricula = userinput.nextInt();
-                imprimeMatricula(encontraMatricula(arvore, matricula, 0).getElemento(), matricula);
+                imprimeMatricula(arvore, matricula);
             } else if (escolha == 3) {
                 System.out.print("Digite o número da matrícula a ser excluída: ");
                 matricula = userinput.nextInt();
@@ -168,14 +167,13 @@ public class App {
         System.out.println(" Quantidade total de elementos da árvore: " + arvore.getQuantidadeElementos());
         System.out.println(" Altura da árvore: " + arvore.getAltura());
         System.out.println(" Maior elemento: ");
-        arvore.getMaiorElemento().imprimeFormatado();
-        System.out.println(" Menor elemento: ");
-        arvore.getMenorElemento().imprimeFormatado();
+        System.out.println(" Maior elemtento: [" + arvore.getMaiorElemento().toString() + " ");
+        System.out.println(" Menor elemtento: [" + arvore.getMenorElemento().toString() + " ");
         System.out.println(" Piores casos de busca: " + arvore.getPioresCasos() + "\n");
     }
 
     public static void escreveArvore(String nomearquivo, String ext, ArvoreBinaria<Aluno> conteudo) {
-        //Tempo em milisegundos divido por 60000 -> tempo em minutos
+        // Tempo em milisegundos divido por 60000 -> tempo em minutos
         long d = System.currentTimeMillis() / 60000;
         String arquivo = nomearquivo + "_" + d + "." + ext;
         try {
@@ -197,6 +195,17 @@ public class App {
         }
     }
 
+
+    public static void imprimeMatricula(ArvoreBinaria<Aluno> arvore, int matricula) {
+        Aluno alvo = new Aluno(matricula, "", "");
+        Aluno alunoRetorno = arvore.busca(alvo);
+        if (alunoRetorno == null)
+            System.out.println("Matrícula [" + matricula + "] não encontrada!");
+        else {
+            System.out.println("   Aluno: [" + alunoRetorno.toString() + "]\n");
+        }
+    }
+
     /**
      * @param arvore      - Arvore binária onde a matrícula deve ser procurada
      * @param matricula   - inteiro que representa a matrícula a ser procurada
@@ -204,47 +213,15 @@ public class App {
      *                    elementos percorridos até chegar à matricula desejada seja
      *                    contabilizado/impresso ou -1 para que não seja
      */
-    public static No<Aluno> encontraMatricula(ArvoreBinaria<Aluno> arvore, int matricula, int percorridos) {
-        No<Aluno> Atual = arvore.getRaiz();
-        No<Aluno> resultado = null;
-        Aluno falha = new Aluno(-1, " ", " ");
-        while (resultado == null) {
-            if (Atual.getElemento().getMatricula() == matricula) {
-                resultado = Atual;
-                if (percorridos >= 0)
-                    System.out.println("   Elementos percorridos: " + percorridos);
-            } else {
-                if (percorridos >= 0)
-                    percorridos++;
-                if ((Atual.getElemento().getMatricula() > matricula) && (Atual.getEsquerda() != null))
-                    Atual = Atual.getEsquerda();
-                else if ((Atual.getElemento().getMatricula() < matricula) && (Atual.getDireita() != null))
-                    Atual = Atual.getDireita();
-                else
-                    resultado = new No<Aluno>(falha);
-            }
-        }
-        return resultado;
-    }
-
-    /**
-     * @param Cadastro  - Nó que contem o aluno com as informações que devem ser
-     *                  inseridas
-     * @param matricula - inteiro com valor da matrícula da estrutura Aluno no Nó
-     */
-    public static void imprimeMatricula(Aluno Cadastro, int matricula) {
-        if (Cadastro.getMatricula() == -1) {
-            System.out.println("   Matricula [" + matricula + "] não encontrada\n");
-        } else {
-            System.out.println("   Dados da matrícula:");
-            Cadastro.imprimeFormatado();
-        }
-    }
 
     public static void removeMatricula(ArvoreBinaria<Aluno> arvore, int matricula) {
-        No<Aluno> Alvo = encontraMatricula(arvore, matricula, -1);
-        imprimeMatricula(Alvo.getElemento(), matricula);
-        arvore.remove(Alvo.getElemento());
-        System.out.println("   Matrícula [" + matricula + "] excluída!\n");
+        Aluno alvo = new Aluno(matricula, "", "");
+        Aluno alunoBuscado = arvore.busca(alvo);
+        if (alunoBuscado == null)
+            System.out.println("Matrícula [" + matricula + "] não encontrada!");
+        else {
+            arvore.remove(alunoBuscado);
+            System.out.println("   Aluno [" + alunoBuscado.toString() + "] excluída!\n");
+        }
     }
 }

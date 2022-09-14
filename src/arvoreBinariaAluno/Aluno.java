@@ -40,11 +40,6 @@ public class Aluno implements Comparable<Aluno> {
     this.nota = nota;
   }
 
-  public void imprimeFormatado() {
-    System.out.println("   Matrícula: " + this.getMatricula() + "\n   Nome: "
-        + this.getNome() + "\n   Nota: " + this.getNota());
-  }
-
   public Aluno(int matricula, String nome, String nota) {
     this.matricula = matricula;
     this.nome = nome;
