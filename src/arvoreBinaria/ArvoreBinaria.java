@@ -11,6 +11,7 @@ public class ArvoreBinaria<T extends Comparable> {
 
   /**
    * Retorna a raiz da árvore
+   * 
    * @return
    */
   public No<T> getRaiz() {
@@ -19,6 +20,7 @@ public class ArvoreBinaria<T extends Comparable> {
 
   /**
    * Permite alterar a raíz da árvore
+   * 
    * @param raiz
    */
   public void setRaiz(No<T> raiz) {
@@ -26,12 +28,12 @@ public class ArvoreBinaria<T extends Comparable> {
   }
 
   /**
-   * Essa função é utilizada dentro 
+   * Essa função é utilizada dentro
    * das funções da classe, onde faz a comparação
    * informando se o elemento está ou não em um nó.
    * Caso esteja o próximo nó será null, caso não esteja
    * será verificado se o valor do elemento é maior ou menor
-   * que o valor existente no nó. 
+   * que o valor existente no nó.
    * 
    * @param noPosicao
    * @param elemento
@@ -50,8 +52,9 @@ public class ArvoreBinaria<T extends Comparable> {
   }
 
   /**
-   * Essa função insere um novo 
+   * Essa função insere um novo
    * elemento (objeto) dentro da arvore
+   * 
    * @param elemento
    * @return
    */
@@ -83,6 +86,7 @@ public class ArvoreBinaria<T extends Comparable> {
    * Essa função busca por um elemento na árvore
    * retornando o objeto se existir e null se o elemento
    * não existir na árvore.
+   * 
    * @param elemento
    * @return
    */
@@ -101,25 +105,27 @@ public class ArvoreBinaria<T extends Comparable> {
     }
     return null;
   }
-  
+
   /**
    * Essa função remove um elemento
    * dentro da árvore retornando true
-   * se ele foi excluído e false 
-   * se ele não tiver sido excluído.
+   * se ele foi excluído. Se ele não existir
+   * na árvore ou não tiver sido excluído, retorna false.
    * 
    * @param elemento
    * @return
    */
   public boolean remove(T elemento) {
-    No<T> no = this.raiz;
-    no = removendo(no, elemento);
-    if (no == null ) {
-      return false;
-    } else if (no.getElemento().compareTo(elemento) != 0) {
+    if (busca(elemento) == null) { //verifica se o elemento existe na árvore
       return false;
     } else {
-      return true;
+      No<T> no = this.raiz;
+      no = removendo(no, elemento);
+      if (busca(elemento) == null) { //verifica se o elemento foi excluído
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 
@@ -128,9 +134,10 @@ public class ArvoreBinaria<T extends Comparable> {
    * para ser feito uma recursão, onde busca pelo elemento
    * e ao excluir reorganiza a árvore, de forma a manter todos os
    * elementos.
+   * 
    * @param no
    * @param elemento
-   * @return
+   * @return No<T>
    */
   private No<T> removendo(No<T> no, T elemento) {
     if (no == null) {
@@ -165,17 +172,19 @@ public class ArvoreBinaria<T extends Comparable> {
 
   /**
    * Retorna a altura da arvore
+   * 
    * @return
    */
   public int getAltura() {
     No<T> no = this.raiz;
     return altura(no);
   }
-  
+
   /**
    * Essa função é utilizada
-   * de forma recursiva para fazer o calculo da 
+   * de forma recursiva para fazer o calculo da
    * raíz da árvore. Utilizada pela função getAltura.
+   * 
    * @param no
    * @return
    */
@@ -197,6 +206,7 @@ public class ArvoreBinaria<T extends Comparable> {
    * Essa função retorna um ArrayList,
    * em ordem crescente, dos elementos existentes
    * dentro da árvore
+   * 
    * @return
    */
   public ArrayList<T> caminhaEmOrdem() {
@@ -211,6 +221,7 @@ public class ArvoreBinaria<T extends Comparable> {
    * Essa função é utilizada pela função
    * caminhaEmOrdem, onde essa faz o ArrayList
    * de forma recursiva.
+   * 
    * @param no
    * @param emOrdem
    */
@@ -226,8 +237,9 @@ public class ArvoreBinaria<T extends Comparable> {
 
   /**
    * Essa função retorna um ArrayList
-   * dos elementos da árvore em ordem dos níveis 
+   * dos elementos da árvore em ordem dos níveis
    * existentes dentro da árvore.
+   * 
    * @return
    */
   public ArrayList<T> caminhaEmNivel() {
@@ -242,6 +254,7 @@ public class ArvoreBinaria<T extends Comparable> {
    * Essa função é utilizada pela função
    * caminhaEmNivel, onde essa faz o ArrayList
    * de forma recursiva.
+   * 
    * @param no
    * @param emNivel
    */
@@ -256,8 +269,9 @@ public class ArvoreBinaria<T extends Comparable> {
   }
 
   /**
-   * Essa função retorna a quantidade de elementos 
+   * Essa função retorna a quantidade de elementos
    * existentes na arvore.
+   * 
    * @return
    */
   public int getQuantidadeElementos() {
@@ -268,6 +282,7 @@ public class ArvoreBinaria<T extends Comparable> {
   /**
    * Essa função retorna o menor elemento
    * da árvore.
+   * 
    * @return
    */
   public T getMenorElemento() {
@@ -283,6 +298,7 @@ public class ArvoreBinaria<T extends Comparable> {
   /**
    * Essa função retorna o maior elemento
    * da árvore
+   * 
    * @return
    */
   public T getMaiorElemento() {
@@ -298,6 +314,7 @@ public class ArvoreBinaria<T extends Comparable> {
   /**
    * Essa função um ArrayList contendo
    * os piores casos de busca dentro da árvore
+   * 
    * @return
    */
   public ArrayList<T> getPioresCasos() {
@@ -308,11 +325,12 @@ public class ArvoreBinaria<T extends Comparable> {
   }
 
   /**
-   * Essa função busca por cada pior caso 
-   * existente dentro da árvore, ou seja, 
+   * Essa função busca por cada pior caso
+   * existente dentro da árvore, ou seja,
    * todos os elementos que possuem o nível
-   * ígual a altura da árvore. 
+   * ígual a altura da árvore.
    * Utilizado pela função pioresCasos()
+   * 
    * @param no
    * @param nivel
    * @param pioresCasos

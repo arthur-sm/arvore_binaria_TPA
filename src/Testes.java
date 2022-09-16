@@ -1,12 +1,3 @@
-
-/**********
-   @ Autor: Arthur Miguel e Cleber de Jesus Salustiano
-   @ Criado em: 07/09/2022 11:00
-   @ Editado por: Arthur SM
-   @ Data da edição: 16/09/22 11:29:21
-   @ Descrição: Código de aplicação da Primeira etapa do trabalho prático de árvores
- **********/
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -16,7 +7,7 @@ import java.util.Scanner;
 import arvoreBinaria.ArvoreBinaria;
 import arvoreBinariaAluno.Aluno;
 
-public class App {
+public class Testes {
     public static void main(String[] args) throws Exception {
         ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<>();
         try {
@@ -37,6 +28,27 @@ public class App {
                     e.getMessage());
         }
         Menu(arvore);
+        System.out.println(arvore.getQuantidadeElementos());
+        System.out.println(arvore.remove(new Aluno(309, "nome", "nota")));
+        Aluno aoba = new Aluno(589, "", "nota");
+        Aluno talis = new Aluno(11971, "", "nota");
+        Aluno carlos = new Aluno(10045, "", "nota");
+        Aluno brenno = new Aluno(3463, "", "nota");
+        arvore.remove(aoba);
+        arvore.remove(talis);
+        arvore.remove(carlos);
+        arvore.remove(brenno);
+        System.out.println(arvore.getQuantidadeElementos());
+        System.out.println(arvore.getRaiz());
+        System.out.println(arvore.getRaiz());
+        System.out.println(arvore.getAltura());
+        System.out.println(arvore.caminhaEmNivel());
+        System.out.println(arvore.remove(new Aluno(6062803, "Melissa Edwards", "68")));
+        System.out.println(arvore.caminhaEmOrdem());
+        System.out.println(arvore.getMaiorElemento());
+        System.out.println(arvore.getMenorElemento());
+        System.out.println(arvore.getPioresCasos());
+        System.out.println(arvore.getAltura());
     }
 
     public static void Menu(ArvoreBinaria<Aluno> arvore) {
