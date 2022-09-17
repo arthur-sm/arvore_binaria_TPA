@@ -3,7 +3,7 @@
    @ Autor: Arthur Miguel e Cleber de Jesus Salustiano
    @ Criado em: 07/09/2022 11:00
    @ Editado por: Arthur SM
-   @ Data da edição: 16/09/22 11:29:21
+   @ Data da edição: 16/09/22 22:41:48
    @ Descrição: Código de aplicação da Primeira etapa do trabalho prático de árvores
  **********/
 
@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import arvoreBinaria.ArvoreBinaria;
+import arvoreBinaria.No;
 import arvoreBinariaAluno.Aluno;
 
 public class App {
@@ -85,7 +86,6 @@ public class App {
     public static void estatisticas(ArvoreBinaria<Aluno> arvore) {
         System.out.println(" Quantidade total de elementos da árvore: " + arvore.getQuantidadeElementos());
         System.out.println(" Altura da árvore: " + arvore.getAltura());
-        System.out.println(" Maior elemento: ");
         System.out.println(" Maior elemtento: [ " + arvore.getMaiorElemento().toString() + "] ");
         System.out.println(" Menor elemtento: [ " + arvore.getMenorElemento().toString() + "] ");
         System.out.println(" Piores casos de busca: " + arvore.getPioresCasos() + "\n");
@@ -114,9 +114,31 @@ public class App {
         }
     }
 
+    public static No<Aluno> encontraMatricula(ArvoreBinaria<Aluno> arvore, int matricula, int percorridos) {
+        No<Aluno> Atual = arvore.getRaiz();
+        No<Aluno> resultado = null;
+        Aluno falha = new Aluno(-1, " ", " ");
+        while (resultado == null) {
+            if (Atual.getElemento().getMatricula() == matricula) {
+                resultado = Atual;
+                if (percorridos >= 0)
+                    System.out.println("   Elementos percorridos: " + percorridos);
+            } else {
+                if (percorridos >= 0)
+                    percorridos++;
+                if ((Atual.getElemento().getMatricula() > matricula) && (Atual.getEsquerda() != null))
+                    Atual = Atual.getEsquerda();
+                else if ((Atual.getElemento().getMatricula() < matricula) && (Atual.getDireita() != null))
+                    Atual = Atual.getDireita();
+                else
+                    resultado = new No<Aluno>(falha);
+            }
+        }
+        return resultado;
+    }
+
     public static void imprimeMatricula(ArvoreBinaria<Aluno> arvore, int matricula) {
-        Aluno alvo = new Aluno(matricula, "", "");
-        Aluno alunoRetorno = arvore.busca(alvo);
+        Aluno alunoRetorno = encontraMatricula(arvore, matricula, 0).getElemento();
         if (alunoRetorno == null)
             System.out.println("Matrícula [" + matricula + "] não encontrada!");
         else {
