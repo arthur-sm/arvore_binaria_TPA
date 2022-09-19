@@ -3,7 +3,7 @@
    @ Autor: Arthur Miguel e Cleber de Jesus Salustiano
    @ Criado em: 07/09/2022 11:00
    @ Editado por: Arthur SM
-   @ Data da edição: 16/09/22 11:29:21
+   @ Data da edição: 18/09/22 23:12:16
    @ Descrição: Código de aplicação da Primeira etapa do trabalho prático de árvores
  **********/
 
@@ -20,7 +20,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<>();
         try {
-            FileReader arq = new FileReader("./teste/teste_100.txt");
+            FileReader arq = new FileReader("./teste/entradaBalanceada600000.txt");
             BufferedReader lerArq = new BufferedReader(arq);
 
             String value = lerArq.readLine();
@@ -117,7 +117,7 @@ public class App {
     public static void imprimeMatricula(ArvoreBinaria<Aluno> arvore, int matricula) {
         Aluno alvo = new Aluno(matricula, "", "");
         Aluno alunoRetorno = arvore.busca(alvo);
-        if (alunoRetorno == null)
+        if (alunoRetorno == null) 
             System.out.println("Matrícula [" + matricula + "] não encontrada!");
         else {
             System.out.println("   Aluno: [" + alunoRetorno.toString() + "]\n");

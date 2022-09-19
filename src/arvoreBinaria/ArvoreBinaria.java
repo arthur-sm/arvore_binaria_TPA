@@ -329,9 +329,9 @@ public class ArvoreBinaria<T extends Comparable> {
   }
 
   /**
-   * Essa função busca por cada pior caso
+   * Essa função busca pelo primeiro pior caso
    * existente dentro da árvore, ou seja,
-   * todos os elementos que possuem o nível
+   * o primeiro elemento que possui o nível
    * ígual a altura da árvore.
    * Utilizado pela função pioresCasos()
    * 
@@ -356,4 +356,40 @@ public class ArvoreBinaria<T extends Comparable> {
 
   }
 
+  
+  /**
+   * Uma versão alternativa do getPiorCaso
+   * que retorna todos os piores casos de busca
+   * 
+   * */
+  public ArrayList<T> getPioresCasos() {
+    No<T> no = this.raiz;
+    ArrayList<T> pioresCasos = new ArrayList<>();
+    buscandoPioresCasos(no, 0, pioresCasos);
+    return pioresCasos;
+  }
+
+  /**
+   * Uma versão alternativa do buscandoPiorCaso
+   * que retorna todos os piores casos de busca
+   * 
+   * @param no
+   * @param nivel
+   * @param pioresCasos
+   * @return
+   */
+  private T buscandoPioresCasos(No<T> no, int nivel, ArrayList<T> pioresCasos) {
+    if (no != null) {
+      if (this.getAltura() == nivel) {
+        pioresCasos.add(no.getElemento());
+      }
+      nivel++;
+      if (no.getElemento() != null)
+        buscandoPioresCasos(no.getEsquerda(), nivel, pioresCasos);
+      if (no.getDireita() != null)
+        buscandoPioresCasos(no.getDireita(), nivel, pioresCasos);
+    }
+    return null;
+
+  }
 }
