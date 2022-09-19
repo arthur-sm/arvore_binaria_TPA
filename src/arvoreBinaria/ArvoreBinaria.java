@@ -365,6 +365,7 @@ public class ArvoreBinaria<T extends Comparable> {
   public ArrayList<T> getPioresCasos() {
     No<T> no = this.raiz;
     ArrayList<T> pioresCasos = new ArrayList<>();
+    getAltura();
     buscandoPioresCasos(no, 0, pioresCasos);
     return pioresCasos;
   }
@@ -380,7 +381,7 @@ public class ArvoreBinaria<T extends Comparable> {
    */
   private T buscandoPioresCasos(No<T> no, int nivel, ArrayList<T> pioresCasos) {
     if (no != null) {
-      if (this.getAltura() == nivel) {
+      if (this.altura == nivel) {
         pioresCasos.add(no.getElemento());
       }
       nivel++;
