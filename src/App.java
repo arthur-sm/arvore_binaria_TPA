@@ -3,7 +3,7 @@
    @ Autor: Arthur Miguel e Cleber de Jesus Salustiano
    @ Criado em: 07/09/2022 11:00
    @ Editado por: Arthur SM
-   @ Data da edição: 16/09/22 22:41:48
+   @ Data da edição: 18/09/22 23:32:52
    @ Descrição: Código de aplicação da Primeira etapa do trabalho prático de árvores
  **********/
 
@@ -21,7 +21,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<>();
         try {
-            FileReader arq = new FileReader("./teste/teste_100.txt");
+            FileReader arq = new FileReader("./teste/entradaBalanceada200000.txt");
             BufferedReader lerArq = new BufferedReader(arq);
 
             String value = lerArq.readLine();
@@ -88,7 +88,7 @@ public class App {
         System.out.println(" Altura da árvore: " + arvore.getAltura());
         System.out.println(" Maior elemtento: [ " + arvore.getMaiorElemento().toString() + "] ");
         System.out.println(" Menor elemtento: [ " + arvore.getMenorElemento().toString() + "] ");
-        System.out.println(" Piores casos de busca: " + arvore.getPioresCasos() + "\n");
+        System.out.println(" Piores casos de busca: " + arvore.getPiorCaso() + "\n");
     }
 
     public static void escreveArvore(String nomearquivo, String ext, ArvoreBinaria<Aluno> conteudo) {

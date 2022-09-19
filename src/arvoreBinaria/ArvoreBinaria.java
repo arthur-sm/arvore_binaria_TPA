@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class ArvoreBinaria<T extends Comparable> {
   private No<T> raiz;
+  private int altura;
+  private T piorCaso;
 
   /**
    * Retorna a raiz da árvore
@@ -177,7 +179,8 @@ public class ArvoreBinaria<T extends Comparable> {
    */
   public int getAltura() {
     No<T> no = this.raiz;
-    return altura(no);
+    this.altura = altura(no);
+    return this.altura;
   }
 
   /**
@@ -311,23 +314,24 @@ public class ArvoreBinaria<T extends Comparable> {
     return no.getElemento();
   }
 
-  /**
+   /**
    * Essa função um ArrayList contendo
    * os piores casos de busca dentro da árvore
    * 
    * @return
    */
-  public ArrayList<T> getPioresCasos() {
+  public T getPiorCaso() {
     No<T> no = this.raiz;
-    ArrayList<T> pioresCasos = new ArrayList<>();
-    buscandoPiorCaso(no, 0, pioresCasos);
-    return pioresCasos;
+    getAltura();
+    this.piorCaso = null;
+    buscandoPiorCaso(no, 0, this.piorCaso);
+    return this.piorCaso;
   }
 
   /**
-   * Essa função busca por cada pior caso
+   * Essa função busca pelo primeiro pior caso
    * existente dentro da árvore, ou seja,
-   * todos os elementos que possuem o nível
+   * o primeiro elemento que possui o nível
    * ígual a altura da árvore.
    * Utilizado pela função pioresCasos()
    * 
@@ -336,16 +340,54 @@ public class ArvoreBinaria<T extends Comparable> {
    * @param pioresCasos
    * @return
    */
-  private T buscandoPiorCaso(No<T> no, int nivel, ArrayList<T> pioresCasos) {
+  private T buscandoPiorCaso(No<T> no, int nivel, T piorCaso) {
+    if (no != null) {
+      if (this.altura == nivel && piorCaso == null) {
+        piorCaso = no.getElemento();
+        this.piorCaso = no.getElemento();
+      }
+      nivel++;
+      if (no.getElemento() != null)
+        buscandoPiorCaso(no.getEsquerda(), nivel, piorCaso);
+      if (no.getDireita() != null)
+        buscandoPiorCaso(no.getDireita(), nivel, piorCaso);
+    }
+    return null;
+
+  }
+
+  
+  /**
+   * Uma versão alternativa do getPiorCaso
+   * que retorna todos os piores casos de busca
+   * 
+   * */
+  public ArrayList<T> getPioresCasos() {
+    No<T> no = this.raiz;
+    ArrayList<T> pioresCasos = new ArrayList<>();
+    buscandoPioresCasos(no, 0, pioresCasos);
+    return pioresCasos;
+  }
+
+  /**
+   * Uma versão alternativa do buscandoPiorCaso
+   * que retorna todos os piores casos de busca
+   * 
+   * @param no
+   * @param nivel
+   * @param pioresCasos
+   * @return
+   */
+  private T buscandoPioresCasos(No<T> no, int nivel, ArrayList<T> pioresCasos) {
     if (no != null) {
       if (this.getAltura() == nivel) {
         pioresCasos.add(no.getElemento());
       }
       nivel++;
       if (no.getElemento() != null)
-        buscandoPiorCaso(no.getEsquerda(), nivel, pioresCasos);
+        buscandoPioresCasos(no.getEsquerda(), nivel, pioresCasos);
       if (no.getDireita() != null)
-        buscandoPiorCaso(no.getDireita(), nivel, pioresCasos);
+        buscandoPioresCasos(no.getDireita(), nivel, pioresCasos);
     }
     return null;
 
