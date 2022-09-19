@@ -88,7 +88,7 @@ public class App {
         System.out.println(" Maior elemento: ");
         System.out.println(" Maior elemtento: [ " + arvore.getMaiorElemento().toString() + "] ");
         System.out.println(" Menor elemtento: [ " + arvore.getMenorElemento().toString() + "] ");
-        System.out.println(" Piores casos de busca: " + arvore.getPioresCasos() + "\n");
+        System.out.println(" Piores casos de busca: " + arvore.getPiorCaso() + "\n");
     }
 
     public static void escreveArvore(String nomearquivo, String ext, ArvoreBinaria<Aluno> conteudo) {

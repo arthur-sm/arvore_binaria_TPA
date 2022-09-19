@@ -10,8 +10,9 @@ import arvoreBinariaAluno.Aluno;
 public class Testes {
     public static void main(String[] args) throws Exception {
         ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<>();
+        long tempoInicial = System.currentTimeMillis();
         try {
-            FileReader arq = new FileReader("./teste/teste_100.txt");
+            FileReader arq = new FileReader("./teste/entradaBalanceada10.txt");
             BufferedReader lerArq = new BufferedReader(arq);
 
             String value = lerArq.readLine();
@@ -27,28 +28,35 @@ public class Testes {
             System.err.printf("Erro na abertura do arquivo: %s.\n",
                     e.getMessage());
         }
-        Menu(arvore);
-        System.out.println(arvore.getQuantidadeElementos());
-        System.out.println(arvore.remove(new Aluno(309, "nome", "nota")));
-        Aluno aoba = new Aluno(589, "", "nota");
-        Aluno talis = new Aluno(11971, "", "nota");
-        Aluno carlos = new Aluno(10045, "", "nota");
-        Aluno brenno = new Aluno(3463, "", "nota");
-        arvore.remove(aoba);
-        arvore.remove(talis);
-        arvore.remove(carlos);
-        arvore.remove(brenno);
-        System.out.println(arvore.getQuantidadeElementos());
-        System.out.println(arvore.getRaiz());
-        System.out.println(arvore.getRaiz());
-        System.out.println(arvore.getAltura());
-        System.out.println(arvore.caminhaEmNivel());
-        System.out.println(arvore.remove(new Aluno(6062803, "Melissa Edwards", "68")));
-        System.out.println(arvore.caminhaEmOrdem());
-        System.out.println(arvore.getMaiorElemento());
-        System.out.println(arvore.getMenorElemento());
-        System.out.println(arvore.getPioresCasos());
-        System.out.println(arvore.getAltura());
+        long tempoFinal = System.currentTimeMillis();
+        System.out.println("Tempo do programa gasto para carregar o arquivo: " + (tempoFinal - tempoInicial) + "ms");
+        System.out.println(arvore.getAltura() - 1);
+        tempoInicial = System.currentTimeMillis();
+        System.out.println(arvore.getPiorCaso());
+        tempoFinal = System.currentTimeMillis();
+        System.out.println("Tempo do programa gasto para ir até o pior caso: " + (tempoFinal - tempoInicial) + "ms");
+        // Menu(arvore);
+        // System.out.println(arvore.getQuantidadeElementos());
+        // System.out.println(arvore.remove(new Aluno(309, "nome", "nota")));
+        // Aluno aoba = new Aluno(589, "", "nota");
+        // Aluno talis = new Aluno(11971, "", "nota");
+        // Aluno carlos = new Aluno(10045, "", "nota");
+        // Aluno brenno = new Aluno(3463, "", "nota");
+        // arvore.remove(aoba);
+        // arvore.remove(talis);
+        // arvore.remove(carlos);
+        // arvore.remove(brenno);
+        // System.out.println(arvore.getQuantidadeElementos());
+        // System.out.println(arvore.getRaiz());
+        // System.out.println(arvore.getRaiz());
+        // System.out.println(arvore.getAltura());
+        // System.out.println(arvore.caminhaEmNivel());
+        // System.out.println(arvore.remove(new Aluno(6062803, "Melissa Edwards", "68")));
+        // System.out.println(arvore.caminhaEmOrdem());
+        // System.out.println(arvore.getMaiorElemento());
+        // System.out.println(arvore.getMenorElemento());
+        // System.out.println(arvore.getPioresCasos());
+        // System.out.println(arvore.getAltura());
     }
 
     public static void Menu(ArvoreBinaria<Aluno> arvore) {
@@ -100,7 +108,7 @@ public class Testes {
         System.out.println(" Maior elemento: ");
         System.out.println(" Maior elemtento: [ " + arvore.getMaiorElemento().toString() + "] ");
         System.out.println(" Menor elemtento: [ " + arvore.getMenorElemento().toString() + "] ");
-        System.out.println(" Piores casos de busca: " + arvore.getPioresCasos() + "\n");
+        System.out.println(" Piores casos de busca: " + arvore.getPiorCaso() + "\n");
     }
 
     public static void escreveArvore(String nomearquivo, String ext, ArvoreBinaria<Aluno> conteudo) {

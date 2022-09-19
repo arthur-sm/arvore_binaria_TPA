@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class ArvoreBinaria<T extends Comparable> {
   private No<T> raiz;
+  private int altura;
+  private T piorCaso;
 
   /**
    * Retorna a raiz da árvore
@@ -177,7 +179,8 @@ public class ArvoreBinaria<T extends Comparable> {
    */
   public int getAltura() {
     No<T> no = this.raiz;
-    return altura(no);
+    this.altura = altura(no);
+    return this.altura;
   }
 
   /**
@@ -317,11 +320,12 @@ public class ArvoreBinaria<T extends Comparable> {
    * 
    * @return
    */
-  public ArrayList<T> getPioresCasos() {
+  public T getPiorCaso() {
     No<T> no = this.raiz;
-    ArrayList<T> pioresCasos = new ArrayList<>();
-    buscandoPiorCaso(no, 0, pioresCasos);
-    return pioresCasos;
+    getAltura();
+    this.piorCaso = null;
+    buscandoPiorCaso(no, 0, this.piorCaso);
+    return this.piorCaso;
   }
 
   /**
@@ -336,16 +340,17 @@ public class ArvoreBinaria<T extends Comparable> {
    * @param pioresCasos
    * @return
    */
-  private T buscandoPiorCaso(No<T> no, int nivel, ArrayList<T> pioresCasos) {
+  private T buscandoPiorCaso(No<T> no, int nivel, T piorCaso) {
     if (no != null) {
-      if (this.getAltura() == nivel) {
-        pioresCasos.add(no.getElemento());
+      if (this.altura == nivel && piorCaso == null) {
+        piorCaso = no.getElemento();
+        this.piorCaso = no.getElemento();
       }
       nivel++;
       if (no.getElemento() != null)
-        buscandoPiorCaso(no.getEsquerda(), nivel, pioresCasos);
+        buscandoPiorCaso(no.getEsquerda(), nivel, piorCaso);
       if (no.getDireita() != null)
-        buscandoPiorCaso(no.getDireita(), nivel, pioresCasos);
+        buscandoPiorCaso(no.getDireita(), nivel, piorCaso);
     }
     return null;
 
