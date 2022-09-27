@@ -6,11 +6,13 @@ import java.util.Scanner;
 
 import arvoreBinaria.ArvoreBinaria;
 import arvoreBinariaAluno.Aluno;
+import arvoreBinaria.ArvoreAVL;
 
 public class Testes {
     public static void main(String[] args) throws Exception {
         ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<>();
-        try {
+        ArvoreAVL<Aluno> arvoreAVL = new ArvoreAVL();
+        /*try {
             FileReader arq = new FileReader("./teste/teste_100.txt");
             BufferedReader lerArq = new BufferedReader(arq);
 
@@ -26,19 +28,25 @@ public class Testes {
         } catch (IOException e) {
             System.err.printf("Erro na abertura do arquivo: %s.\n",
                     e.getMessage());
-        }
-        Menu(arvore);
-        System.out.println(arvore.getQuantidadeElementos());
-        System.out.println(arvore.remove(new Aluno(309, "nome", "nota")));
-        Aluno aoba = new Aluno(589, "", "nota");
-        Aluno talis = new Aluno(11971, "", "nota");
-        Aluno carlos = new Aluno(10045, "", "nota");
-        Aluno brenno = new Aluno(3463, "", "nota");
-        arvore.remove(aoba);
-        arvore.remove(talis);
-        arvore.remove(carlos);
-        arvore.remove(brenno);
-        System.out.println(arvore.getQuantidadeElementos());
+        }*/
+        Aluno aoba = new Aluno(2, "", "nota");
+        Aluno bob = new Aluno(1,"","nota");
+        Aluno talis = new Aluno(3, "", "nota");
+        Aluno carlos = new Aluno(4, "", "nota");
+        Aluno darlos = new Aluno(5,"","nota");
+        arvore.insere(aoba);
+        arvore.insere(talis);
+        arvore.insere(carlos);
+        arvore.insere(bob);
+        arvore.insere(darlos);
+        arvoreAVL.insere(aoba);
+        arvoreAVL.insere(talis);
+        arvoreAVL.insere(carlos);
+        arvoreAVL.insere(bob);
+        arvoreAVL.insere(darlos);
+        arvore.caminhaEmNivel().forEach(elem -> System.out.println(elem));
+        arvoreAVL.caminhaEmNivel().forEach(elem -> System.out.println(elem));
+        /*System.out.println(arvore.getQuantidadeElementos());
         System.out.println(arvore.getRaiz());
         System.out.println(arvore.getRaiz());
         System.out.println(arvore.getAltura());
@@ -48,7 +56,7 @@ public class Testes {
         System.out.println(arvore.getMaiorElemento());
         System.out.println(arvore.getMenorElemento());
         System.out.println(arvore.getPioresCasos());
-        System.out.println(arvore.getAltura());
+        System.out.println(arvore.getAltura());*/
     }
 
     public static void Menu(ArvoreBinaria<Aluno> arvore) {

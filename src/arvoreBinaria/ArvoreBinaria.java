@@ -41,7 +41,7 @@ public class ArvoreBinaria<T extends Comparable> {
    * @param elemento
    * @return
    */
-  private No<T> comparaNoAtualComProximo(No<T> noPosicao, T elemento) {
+  protected No<T> comparaNoAtualComProximo(No<T> noPosicao, T elemento) {
     No<T> proximoNo = null;
     if (noPosicao.getElemento().compareTo(elemento) > 0) {
       proximoNo = noPosicao.getEsquerda();

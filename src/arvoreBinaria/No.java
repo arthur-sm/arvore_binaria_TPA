@@ -5,6 +5,7 @@ import java.lang.reflect.Constructor;
 public class No<T extends Comparable> {
   private No<T> direita;
   private No<T> esquerda;
+  private int altura;
   private T elemento;
 
   public T getElemento() {
@@ -21,6 +22,14 @@ public class No<T extends Comparable> {
 
   public No<T> getEsquerda() {
     return esquerda;
+  }
+
+  public int getAltura() {
+      return altura;
+  }
+
+  public void setAltura(int altura) {
+      this.altura = altura;
   }
 
   public void setDireita(No<T> direita) {
