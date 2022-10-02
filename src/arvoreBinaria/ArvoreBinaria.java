@@ -191,7 +191,7 @@ public class ArvoreBinaria<T extends Comparable> {
    * @param no
    * @return
    */
-  private int altura(No<T> no) {
+  protected int altura(No<T> no) {
     if (no == null) {
       return -1;
     } else {
@@ -264,7 +264,7 @@ public class ArvoreBinaria<T extends Comparable> {
   private void caminhandoEmNivel(No<T> no, ArrayList<T> emNivel) {
     if (no != null) {
       emNivel.add(no.getElemento());
-      if (no.getElemento() != null)
+      if (no.getEsquerda() != null)
         caminhandoEmNivel(no.getEsquerda(), emNivel);
       if (no.getDireita() != null)
         caminhandoEmNivel(no.getDireita(), emNivel);

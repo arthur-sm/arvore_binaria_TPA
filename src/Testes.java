@@ -10,8 +10,6 @@ import arvoreBinaria.ArvoreAVL;
 
 public class Testes {
     public static void main(String[] args) throws Exception {
-        ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<>();
-        ArvoreAVL<Aluno> arvoreAVL = new ArvoreAVL();
         /*try {
             FileReader arq = new FileReader("./teste/teste_100.txt");
             BufferedReader lerArq = new BufferedReader(arq);
@@ -29,23 +27,54 @@ public class Testes {
             System.err.printf("Erro na abertura do arquivo: %s.\n",
                     e.getMessage());
         }*/
-        Aluno aoba = new Aluno(2, "", "nota");
-        Aluno bob = new Aluno(1,"","nota");
-        Aluno talis = new Aluno(3, "", "nota");
-        Aluno carlos = new Aluno(4, "", "nota");
-        Aluno darlos = new Aluno(5,"","nota");
-        arvore.insere(aoba);
-        arvore.insere(talis);
-        arvore.insere(carlos);
-        arvore.insere(bob);
-        arvore.insere(darlos);
-        arvoreAVL.insere(aoba);
-        arvoreAVL.insere(talis);
-        arvoreAVL.insere(carlos);
-        arvoreAVL.insere(bob);
-        arvoreAVL.insere(darlos);
+        ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<>();
+        ArvoreAVL<Aluno> arvoreAVL = new ArvoreAVL();
+        System.out.println("Teste Rotação Direita: \n");
+        Aluno a1 = new Aluno(1, "", "nota");
+        Aluno a2 = new Aluno(2,"","nota");
+        Aluno a3 = new Aluno(3, "", "nota");
+        Aluno a4 = new Aluno(4, "", "nota");
+        Aluno a5 = new Aluno(5,"","nota");
+        arvore.insere(a2);
+        arvore.insere(a1);
+        arvore.insere(a3);
+        arvore.insere(a4);
+        arvore.insere(a5);
+        arvoreAVL.insere(a2);
+        arvoreAVL.insere(a1);
+        arvoreAVL.insere(a3);
+        arvoreAVL.insere(a4);
+        arvoreAVL.insere(a5);
+        System.out.println("Árvore Comum");
         arvore.caminhaEmNivel().forEach(elem -> System.out.println(elem));
+        System.out.println("\n");
+        System.out.println("Árvore AVL");
         arvoreAVL.caminhaEmNivel().forEach(elem -> System.out.println(elem));
+        
+        ArvoreBinaria<Aluno> arvore2 = new ArvoreBinaria<>();
+        ArvoreAVL<Aluno> arvoreAVL2 = new ArvoreAVL();
+        System.out.println("Teste Rotação Esquerda: \n");
+        Aluno b1 = new Aluno(1, "", "nota");
+        Aluno b2 = new Aluno(2,"","nota");
+        Aluno b3 = new Aluno(3, "", "nota");
+        Aluno b4 = new Aluno(4, "", "nota");
+        Aluno b5 = new Aluno(5,"","nota");
+        arvore2.insere(b4);
+        arvore2.insere(b5);
+        arvore2.insere(b3);
+        arvore2.insere(b2);
+        arvore2.insere(b1);
+        arvoreAVL2.insere(b4);
+        arvoreAVL2.insere(b5);
+        arvoreAVL2.insere(b3);
+        arvoreAVL2.insere(b2);
+        arvoreAVL2.insere(b1);
+        System.out.println("Árvore Comum");
+        arvore2.caminhaEmNivel().forEach(elem -> System.out.println(elem));
+        System.out.println("\n");
+        System.out.println("Árvore AVL");
+        arvoreAVL2.caminhaEmNivel().forEach(elem -> System.out.println(elem));
+        
         /*System.out.println(arvore.getQuantidadeElementos());
         System.out.println(arvore.getRaiz());
         System.out.println(arvore.getRaiz());
