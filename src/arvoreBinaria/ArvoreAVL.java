@@ -52,9 +52,9 @@ public class ArvoreAVL<T extends Comparable> extends ArvoreBinaria {
 
     private No<T> rotacaoEsquerdaDireita(No<T> r) {
         r.setEsquerda(
-            rotacaoEsquerda(
-                r.getDireita()));
-        return rotacaoDireita(r.getDireita());
+                rotacaoEsquerda(
+                        r.getEsquerda()));
+        return rotacaoDireita(r);
     }
 
     private No<T> rotacaoDireitaEsquerda(No<T> r) {
