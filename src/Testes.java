@@ -84,12 +84,12 @@ public class Testes {
         arvore3.insere(a2);
         arvore3.insere(a5);
         
-        arvoreAVL3.insere(a8);
-        arvoreAVL3.insere(a9);
-        arvoreAVL3.insere(a4);
         arvoreAVL3.insere(a6);
+        arvoreAVL3.insere(a5);
+        arvoreAVL3.insere(a4);
+        arvoreAVL3.insere(a3);
         arvoreAVL3.insere(a2);
-        arvoreAVL3.insere(a5);        
+        arvoreAVL3.insere(a1);        
         System.out.println("Árvore Comum");
         arvore3.caminhaEmNivel().forEach(elem -> System.out.println(elem));
         System.out.println("\n");

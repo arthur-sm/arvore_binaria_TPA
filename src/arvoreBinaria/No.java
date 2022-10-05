@@ -25,11 +25,29 @@ public class No<T extends Comparable> {
   }
 
   public int getAltura() {
-      return altura;
+    return obterAltura(this);
+  }
+
+  private int obterAltura(No<T> r) {
+    if (r == null) {
+      return -1;
+    } else {
+      int hd = obterAltura(r.direita);
+      int he = obterAltura(r.esquerda);
+      if (hd > he) {
+        return hd + 1;
+      } else {
+        return he + 1;
+      }
+    }
+  }
+
+  public int fatorBalanceamento(){
+    return obterAltura(this.direita) - obterAltura(this.esquerda);
   }
 
   public void setAltura(int altura) {
-      this.altura = altura;
+    this.altura = altura;
   }
 
   public void setDireita(No<T> direita) {
