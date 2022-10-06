@@ -2,42 +2,80 @@ package arvoreBinaria;
 
 public class ArvoreAVL<T extends Comparable> extends ArvoreBinaria {
 
+    // @Override
+    // public boolean insere(Comparable elemento) {
+    //     No<T> novoNo = new No<T>((T) elemento);
+    //     if (this.getRaiz() == null) {
+    //         this.setRaiz(novoNo);
+    //         novoNo.setAltura(0);
+    //         return true;
+    //     } else {
+    //         No<T> noPosicao = this.getRaiz();
+    //         No<T> proximoNo = noPosicao;
+    //         while (proximoNo != null) {
+    //             noPosicao = proximoNo;
+    //             noPosicao.setAltura(this.altura(noPosicao) + 1);
+    //             proximoNo = this.comparaNoAtualComProximo(noPosicao, elemento);
+    //         }
+    //         if (noPosicao.getElemento().compareTo(elemento) > 0) {
+    //             noPosicao.setEsquerda(novoNo);
+    //             balancaArvore(this.getRaiz());
+    //             return true;
+    //         } else if (noPosicao.getElemento().compareTo(elemento) < 0) {
+    //             noPosicao.setDireita(novoNo);
+    //             balancaArvore(this.getRaiz());
+    //             return true;
+    //         } else {
+    //             return false;
+    //         }
+    //     }
+    // }
+
     @Override
     public boolean insere(Comparable elemento) {
         No<T> novoNo = new No<T>((T) elemento);
-        if (this.getRaiz() == null) {
+        if (this.getRaiz() == null)
             this.setRaiz(novoNo);
-            novoNo.setAltura(0);
-            return true;
+        else 
+            this.setRaiz(addRecursao(this.getRaiz(), novoNo));
+        
+        return true;
+    }
+
+    protected No<T> addRecursao(No<T> atual, No<T> novo){
+        if (novo.getElemento().compareTo(atual.getElemento()) < 0) {
+            if (atual.getEsquerda() == null)
+                atual.setEsquerda(novo);
+            else 
+                atual.setEsquerda(addRecursao(atual.getEsquerda(), novo));
         } else {
-            No<T> noPosicao = this.getRaiz();
-            No<T> proximoNo = noPosicao;
-            while (proximoNo != null) {
-                noPosicao = proximoNo;
-                noPosicao.setAltura(this.altura(noPosicao) + 1);
-                proximoNo = this.comparaNoAtualComProximo(noPosicao, elemento);
-            }
-            if (noPosicao.getElemento().compareTo(elemento) > 0) {
-                noPosicao.setEsquerda(novoNo);
-                balancaArvore(this.getRaiz());
-                return true;
-            } else if (noPosicao.getElemento().compareTo(elemento) < 0) {
-                noPosicao.setDireita(novoNo);
-                balancaArvore(this.getRaiz());
-                return true;
-            } else {
-                return false;
-            }
+            if (atual.getDireita() == null)
+                atual.setDireita(novo);
+            else
+                atual.setDireita(addRecursao(atual.getDireita(), novo));
         }
+
+        if (atual.fatorBalanceamento()>1){
+            if (atual.getDireita().fatorBalanceamento()>0)
+                atual = this.rotacaoEsquerda(atual);
+            else 
+                atual = this.rotacaoDireitaEsquerda(atual);
+        } else if (atual.fatorBalanceamento() < -1) {
+            if (atual.getEsquerda().fatorBalanceamento()<0)
+                atual = this.rotacaoDireita(atual);
+            else 
+                atual = this.rotacaoEsquerdaDireita(atual);
+        }
+
+        return atual;
+
     }
 
     private No<T> rotacaoEsquerda(No<T> r) {
         No<T> f = r.getDireita();
         r.setDireita(f.getEsquerda());
         f.setEsquerda(r);
-        r.setAltura(altura(r));
-        f.setAltura(altura(f));
-        // Retorna o nó que era o filho
+        
         return f;
     }
 
@@ -45,8 +83,6 @@ public class ArvoreAVL<T extends Comparable> extends ArvoreBinaria {
         No<T> f = r.getEsquerda();
         r.setEsquerda(f.getDireita());
         f.setDireita(r);
-        r.setAltura(altura(r));
-        f.setAltura(altura(f));
         return f;
     }
 

@@ -13,13 +13,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import arvoreBinaria.ArvoreAVL;
 import arvoreBinaria.ArvoreBinaria;
 import arvoreBinaria.No;
 import arvoreBinariaAluno.Aluno;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<>();
+        ArvoreBinaria<Aluno> arvore = new ArvoreAVL<>();
         try {
             FileReader arq = new FileReader("./teste/entradaBalanceada200000.txt");
             BufferedReader lerArq = new BufferedReader(arq);
