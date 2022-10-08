@@ -30,6 +30,6 @@ public class Relatorio {
     }
 
     System.out.println("Arvore normal: "+ arvore.getAltura());
-    System.out.println("Arvore AVL" + arvoreAVL.getAltura());
+    System.out.println("Arvore AVL: " + arvoreAVL.getAltura());
   }
 }

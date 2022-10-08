@@ -2,38 +2,13 @@ package arvoreBinaria;
 
 public class ArvoreAVL<T extends Comparable> extends ArvoreBinaria {
 
-    // @Override
-    // public boolean insere(Comparable elemento) {
-    //     No<T> novoNo = new No<T>((T) elemento);
-    //     if (this.getRaiz() == null) {
-    //         this.setRaiz(novoNo);
-    //         novoNo.setAltura(0);
-    //         return true;
-    //     } else {
-    //         No<T> noPosicao = this.getRaiz();
-    //         No<T> proximoNo = noPosicao;
-    //         while (proximoNo != null) {
-    //             noPosicao = proximoNo;
-    //             noPosicao.setAltura(this.altura(noPosicao) + 1);
-    //             proximoNo = this.comparaNoAtualComProximo(noPosicao, elemento);
-    //         }
-    //         if (noPosicao.getElemento().compareTo(elemento) > 0) {
-    //             noPosicao.setEsquerda(novoNo);
-    //             balancaArvore(this.getRaiz());
-    //             return true;
-    //         } else if (noPosicao.getElemento().compareTo(elemento) < 0) {
-    //             noPosicao.setDireita(novoNo);
-    //             balancaArvore(this.getRaiz());
-    //             return true;
-    //         } else {
-    //             return false;
-    //         }
-    //     }
-    // }
-
     @Override
     public boolean insere(Comparable elemento) {
         No<T> novoNo = new No<T>((T) elemento);
+
+        if (this.busca(elemento) != null)
+            return false;
+
         if (this.getRaiz() == null)
             this.setRaiz(novoNo);
         else 

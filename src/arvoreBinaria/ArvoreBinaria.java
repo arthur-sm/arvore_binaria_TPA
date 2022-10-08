@@ -93,7 +93,7 @@ public class ArvoreBinaria<T extends Comparable> {
    * @return
    */
   public T busca(T elemento) { // mudar nome para algo como 'Existe'?
-    if (raiz.getElemento().compareTo(elemento) == 0) {
+    if (raiz != null && raiz.getElemento().compareTo(elemento) == 0) {
       return raiz.getElemento();
     }
     No<T> noPosicao = this.raiz;
@@ -102,7 +102,7 @@ public class ArvoreBinaria<T extends Comparable> {
       noPosicao = proximoNo;
       proximoNo = comparaNoAtualComProximo(noPosicao, elemento);
     }
-    if (noPosicao.getElemento().compareTo(elemento) == 0) {
+    if (noPosicao != null && noPosicao.getElemento().compareTo(elemento) == 0) {
       return noPosicao.getElemento();
     }
     return null;
