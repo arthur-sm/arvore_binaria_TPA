@@ -1,0 +1,6 @@
+
+#Arquivos .class do java
+bin/*
+bin/App.class
+#Arquivos de saída do programa
+arvore_ordem_*.txt

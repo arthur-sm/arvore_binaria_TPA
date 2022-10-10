@@ -75,31 +75,4 @@ public class ArvoreAVL<T extends Comparable> extends ArvoreBinaria {
         return rotacaoEsquerda(r);
     }
 
-    private int fatorBalanceamento(No<T> no) {
-        if (no == null)
-            return 0;
-        else if (no.getDireita() == null && no.getEsquerda() != null)
-            return (no.getEsquerda().getAltura() * -1);
-        else if (no.getEsquerda() == null && no.getDireita() != null)
-            return (no.getDireita().getAltura());
-        else if (no.getEsquerda() == null && no.getDireita() == null)
-            return 0;
-        else
-            return (no.getDireita().getAltura() - no.getEsquerda().getAltura());
-    }
-
-    private void balancaArvore(No<T> raiz) {
-        raiz = this.getRaiz();
-        if (fatorBalanceamento(raiz) > 1) {
-            if (fatorBalanceamento(raiz.getDireita()) > 0)
-                this.setRaiz(rotacaoEsquerda(raiz));
-            else
-                this.setRaiz(rotacaoDireitaEsquerda(raiz));
-        } else if (fatorBalanceamento(raiz) < -1) {
-            if (fatorBalanceamento(raiz.getEsquerda()) < 0)
-                this.setRaiz(rotacaoDireita(raiz));
-            else
-                this.setRaiz(rotacaoEsquerdaDireita(raiz));
-        }
-    }
 }
